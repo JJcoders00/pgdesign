@@ -3,947 +3,285 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PG Design | Premium Interior Studio Thodupuzha</title>
+    <title>PG Design | Interior Studio</title>
+    <meta name="description" content="PG Design Interior Studio - Creating spaces for better living. You dream, we capture. Let us bring your ideas to life!">
     
-    <!-- Premium Typography -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
-
-    <!-- Core Animation Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.32/dist/lenis.min.js"></script>
-
-    <style>
-        /* ==========================================================================
-           1. CSS ARCHITECTURE & VARIABLES (No External Frameworks)
-           ========================================================================== */
-        :root {
-            --bg-base: #030303;
-            --bg-panel: #0a0a0a;
-            --bg-elevated: #141414;
-            --text-main: #f0f0eb;
-            --text-muted: #888888;
-            --accent: #c4a47c; /* Architectural Bronze */
-            --accent-glow: rgba(196, 164, 124, 0.2);
-            --whatsapp: #25D366;
-            
-            --font-sans: 'Plus Jakarta Sans', sans-serif;
-            --font-serif: 'Playfair Display', serif;
-            
-            --pad-x: 5vw;
-            --section-pad: 15vh 0;
-            --nav-height: 100px;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
-        
-        body {
-            background-color: var(--bg-base); color: var(--text-main);
-            font-family: var(--font-sans); overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Lenis Smooth Scroll Fixes */
-        html.lenis, html.lenis body { height: auto; width: 100%; }
-        .lenis.lenis-smooth { scroll-behavior: auto; }
-        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-        .lenis.lenis-stopped { overflow: hidden; }
-
-        /* Typography Engine */
-        h1, h2, h3, h4, h5 { font-family: var(--font-serif); font-weight: 400; margin-bottom: 0.5em; }
-        .text-massive { font-size: clamp(4rem, 12vw, 15rem); line-height: 0.85; letter-spacing: -0.04em; text-transform: uppercase; }
-        .text-hero { font-size: clamp(3rem, 8vw, 10rem); line-height: 0.9; letter-spacing: -0.03em; }
-        .text-h2 { font-size: clamp(2rem, 5vw, 6rem); line-height: 1.1; letter-spacing: -0.02em; }
-        .text-h3 { font-size: clamp(1.5rem, 3vw, 3rem); line-height: 1.2; }
-        .text-body { font-size: clamp(1rem, 1.2vw, 1.25rem); line-height: 1.6; font-weight: 300; }
-        .text-body-lg { font-size: clamp(1.2rem, 2vw, 2.5rem); line-height: 1.4; font-weight: 300; }
-        .text-caption { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 600; color: var(--accent); }
-        .italic { font-style: italic; } .uppercase { text-transform: uppercase; }
-
-        /* Layout Utilities */
-        .container { width: 100%; max-width: 1800px; margin: 0 auto; padding: 0 var(--pad-x); }
-        .flex { display: flex; } .flex-col { flex-direction: column; }
-        .items-center { align-items: center; } .items-start { align-items: flex-start; }
-        .justify-center { justify-content: center; } .justify-between { justify-content: space-between; }
-        .w-full { width: 100%; } .h-screen { height: 100vh; }
-        .relative { position: relative; } .absolute { position: absolute; }
-        .overflow-hidden { overflow: hidden; }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
-        @media(max-width: 900px){ .grid-2 { grid-template-columns: 1fr; } }
-        
-        .section { padding: var(--section-pad) 0; }
-
-        /* ==========================================================================
-           2. GLOBAL UI (Cursor, Noise, Nav, Transition)
-           ========================================================================== */
-        .noise {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: 9999; opacity: 0.05;
-            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-
-        .cursor-dot { width: 6px; height: 6px; background: white; position: fixed; border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
-        .cursor-ring {
-            width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.3);
-            position: fixed; border-radius: 50%; pointer-events: none; z-index: 9999;
-            transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height);
-            padding: 0 var(--pad-x); display: flex; justify-content: space-between; align-items: center;
-            z-index: 100; mix-blend-mode: difference;
-        }
-        .logo { font-size: 1.5rem; font-family: var(--font-serif); font-weight: 600; color: white; text-decoration: none; }
-        .nav-links { display: flex; gap: 2.5rem; }
-        .nav-link { color: white; text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; position: relative; padding: 0.5rem 0;}
-        .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: white; transform: scaleX(0); transform-origin: right; transition: transform 0.4s ease; }
-        .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); transform-origin: left; }
-        @media(max-width: 900px){ .nav-links { display: none; } }
-
-        /* Book Button in Nav */
-        .nav-book-btn { border: 1px solid rgba(255,255,255,0.3); border-radius: 2rem; padding: 0.5rem 1.5rem; transition: 0.3s; }
-        .nav-book-btn:hover { background: white; color: black; }
-
-        /* Page Transition Overlay */
-        .page-transition {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: var(--accent); z-index: 9000;
-            display: flex; justify-content: center; align-items: center;
-            transform: translateY(100%);
-        }
-        .transition-text { font-family: var(--font-serif); font-size: 4rem; color: var(--bg-base); opacity: 0; }
-
-        /* SPA View Container */
-        .view { display: none; width: 100%; opacity: 0; }
-        .view.active { display: block; opacity: 1; }
-
-        /* Components */
-        .magnetic-btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 160px; height: 160px; border-radius: 50%;
-            background: var(--text-main); color: var(--bg-base);
-            font-size: 0.9rem; font-weight: 600; text-decoration: none; text-transform: uppercase;
-            letter-spacing: 1px; position: relative; overflow: hidden; border: none; margin-top: 2rem;
-        }
-        .magnetic-btn span { position: relative; z-index: 2; pointer-events: none; }
-        .magnetic-btn.outline { background: transparent; border: 1px solid var(--text-muted); color: var(--text-main); }
-        .magnetic-btn.whatsapp { background: var(--whatsapp); color: white; width: 180px; height: 180px;}
-
-        /* ==========================================================================
-           3. VIEW: HOME (3D Explosion & Parallax Storytelling)
-           ========================================================================== */
-        .hero-3d-wrapper { height: 250vh; position: relative; z-index: 10; background: var(--bg-base); }
-        .hero-3d-sticky {
-            position: sticky; top: 0; height: 100vh; width: 100%;
-            display: flex; justify-content: center; align-items: center; overflow: hidden;
-            perspective: 1200px; transform-style: preserve-3d;
-        }
-        .hero-title-box { text-align: center; z-index: 5; mix-blend-mode: difference; color: white; pointer-events: none;}
-        
-        .shatter-item {
-            position: absolute; width: 30vw; height: 40vh; object-fit: cover;
-            border-radius: 8px; box-shadow: 0 30px 60px rgba(0,0,0,0.8);
-            will-change: transform, opacity; z-index: 1; opacity: 0;
-            filter: brightness(0.7);
-        }
-
-        .marquee-section { padding: 5vh 0; background: var(--bg-panel); border-top: 1px solid rgba(255,255,255,0.05); overflow: hidden; display: flex; }
-        .marquee-content { display: flex; white-space: nowrap; animation: marquee 25s linear infinite; }
-        .marquee-content h2 { font-size: 5rem; margin: 0 2vw; text-transform: uppercase; color: transparent; -webkit-text-stroke: 1px var(--text-muted); transition: 0.3s; }
-        .marquee-content h2:hover { color: var(--accent); -webkit-text-stroke: 0px; }
-        @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
-
-        /* ==========================================================================
-           4. VIEW: ABOUT (Parallax Storytelling & Content Rich)
-           ========================================================================== */
-        .parallax-header { height: 80vh; display: flex; align-items: flex-end; padding-bottom: 10vh; }
-        .about-grid { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 5vh; }
-        .stat-box { padding: 3rem; background: var(--bg-panel); border-radius: 1rem; text-align: center; }
-        .stat-box h3 { font-size: 4rem; color: var(--accent); font-family: var(--font-sans); font-weight: 300; }
-        .parallax-img-container { height: 70vh; overflow: hidden; border-radius: 1rem; margin-top: 10vh; position: relative;}
-        .p-img { width: 100%; height: 130%; object-fit: cover; position: absolute; top: -15%; }
-
-        /* ==========================================================================
-           5. VIEW: SERVICES (Animated SVG Paths & Sticky Layers)
-           ========================================================================== */
-        .services-wrapper { display: flex; position: relative; padding-top: 10vh; }
-        
-        /* Left: Animated SVG Path */
-        .svg-timeline-col { width: 30%; position: relative; display: flex; justify-content: center; }
-        .svg-track { position: absolute; top: 0; width: 2px; height: 100%; background: rgba(255,255,255,0.1); }
-        .svg-fill { position: absolute; top: 0; width: 4px; height: 100%; background: var(--accent); transform-origin: top; transform: scaleY(0); }
-        .timeline-node { position: absolute; width: 20px; height: 20px; border-radius: 50%; background: var(--bg-base); border: 2px solid var(--accent); z-index: 2; transform: translateX(-8px); transition: background 0.3s;}
-        .timeline-node.active { background: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
-
-        /* Right: Sticky Layers */
-        .sticky-layers-col { width: 70%; position: relative; padding-bottom: 50vh; }
-        .sticky-layer {
-            position: sticky; top: 15vh; min-height: 70vh; background: var(--bg-panel);
-            border-radius: 2rem; padding: 4rem; margin-bottom: 10vh;
-            border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            display: flex; flex-direction: column; justify-content: center;
-        }
-        .layer-icon { font-size: 3rem; color: var(--accent); margin-bottom: 2rem; font-family: var(--font-serif);}
-        .sticky-layer ul { list-style: none; margin-top: 2rem; }
-        .sticky-layer li { padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; font-weight: 300; letter-spacing: 0.5px;}
-
-        /* ==========================================================================
-           6. VIEW: PORTFOLIO (Stacked Card Animations)
-           ========================================================================== */
-        .portfolio-stack-wrap { padding-top: 10vh; padding-bottom: 20vh; }
-        .stack-card {
-            position: sticky; top: var(--nav-height); height: 80vh; width: 100%;
-            border-radius: 2rem; overflow: hidden; margin-bottom: 5vh;
-            display: flex; align-items: flex-end; padding: 4rem;
-            transform-origin: top center; box-shadow: 0 -20px 40px rgba(0,0,0,0.8);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .stack-card img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; filter: brightness(0.4); transition: transform 0.5s, filter 0.5s; }
-        .stack-card:hover img { filter: brightness(0.7); transform: scale(1.03); }
-        .stack-content { z-index: 2; width: 100%; display: flex; justify-content: space-between; align-items: flex-end; }
-        .tags { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;}
-        .tag { padding: 0.5rem 1rem; border: 1px solid rgba(255,255,255,0.3); border-radius: 2rem; font-size: 0.75rem; text-transform: uppercase; backdrop-filter: blur(5px); }
-        .card-stats { text-align: right; }
-        .card-stats p { font-size: 1.2rem; font-family: var(--font-serif); color: var(--accent); }
-
-        /* ==========================================================================
-           7. VIEW: CLIENT PORTAL / BOOKING (WhatsApp Integration)
-           ========================================================================== */
-        .booking-layout { display: flex; min-height: 80vh; gap: 5vw; padding-top: 5vh; }
-        .booking-info { width: 40%; }
-        .booking-form-container { width: 60%; background: var(--bg-panel); padding: 4rem; border-radius: 2rem; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);}
-        
-        /* Multi-step Form Logic */
-        .form-step { display: none; opacity: 0; transform: translateX(20px); transition: 0.4s; }
-        .form-step.active { display: block; opacity: 1; transform: translateX(0); }
-        
-        .progress-bar { width: 100%; height: 2px; background: rgba(255,255,255,0.1); margin-bottom: 3rem; position: relative; }
-        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--accent); width: 33%; transition: width 0.4s ease; }
-        
-        .input-group { margin-bottom: 2rem; position: relative; }
-        .input-group label { display: block; margin-bottom: 0.5rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
-        .input-group input, .input-group select, .input-group textarea {
-            width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.2);
-            padding: 1rem 0; color: white; font-size: 1.2rem; font-family: var(--font-sans); outline: none; transition: border-color 0.3s;
-        }
-        .input-group input:focus, .input-group select:focus, .input-group textarea:focus { border-bottom-color: var(--accent); }
-        
-        /* Custom Radio Grid */
-        .radio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .radio-btn {
-            border: 1px solid rgba(255,255,255,0.2); border-radius: 1rem; padding: 1.5rem;
-            cursor: pointer; transition: 0.3s; text-align: center;
-        }
-        .radio-btn input { display: none; }
-        .radio-btn.selected { border-color: var(--accent); background: rgba(196, 164, 124, 0.1); }
-
-        .form-actions { display: flex; justify-content: space-between; margin-top: 3rem; }
-        .btn { padding: 1rem 2rem; background: var(--text-main); color: var(--bg-base); border: none; border-radius: 2rem; font-weight: 600; text-transform: uppercase; transition: 0.3s; cursor: none;}
-        .btn-outline { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: white; }
-
-        /* Success State */
-        .success-state { text-align: center; padding: 4rem 0; display: none; }
-        .success-icon { font-size: 4rem; color: var(--whatsapp); margin-bottom: 2rem; }
-
-        /* Footer */
-        footer { padding: 4rem var(--pad-x); border-top: 1px solid rgba(255,255,255,0.05); background: var(--bg-elevated); margin-top: 10vh;}
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
-
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <!-- Cinematic Overlays -->
-    <div class="noise"></div>
-    <div class="cursor-dot"></div>
-    <div class="cursor-ring"></div>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-content">
+            <h1 class="preloader-title">PG DESIGN</h1>
+            <div class="loading-bar-container">
+                <div class="loading-bar"></div>
+            </div>
+            <div class="loading-percentage">0%</div>
+        </div>
+    </div>
 
     <!-- Navigation -->
-    <nav>
-        <a href="#" class="logo hover-target" onclick="navigate('home', event)">PG.</a>
-        <div class="nav-links">
-            <a href="#" class="nav-link active hover-target" onclick="navigate('home', event)">Home</a>
-            <a href="#" class="nav-link hover-target" onclick="navigate('about', event)">Studio</a>
-            <a href="#" class="nav-link hover-target" onclick="navigate('services', event)">Expertise</a>
-            <a href="#" class="nav-link hover-target" onclick="navigate('portfolio', event)">Portfolio</a>
-            <a href="#" class="nav-link nav-book-btn hover-target" onclick="navigate('booking', event)">Client Portal</a>
+    <nav class="navbar">
+        <div class="nav-brand">PG Design</div>
+        <div class="nav-menu-btn magnetic-element">
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <div class="nav-overlay">
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link" data-text="Home">Home</a></li>
+                <li><a href="#about" class="nav-link" data-text="About">About</a></li>
+                <li><a href="#services" class="nav-link" data-text="Services">Services</a></li>
+                <li><a href="#portfolio" class="nav-link" data-text="Portfolio">Portfolio</a></li>
+                <li><a href="#contact" class="nav-link" data-text="Contact">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
-    <!-- Page Transition Curtain -->
-    <div class="page-transition">
-        <div class="transition-text">PG Design</div>
-    </div>
+    <main id="smooth-wrapper">
+        <div id="smooth-content">
+            <!-- Hero Section -->
+            <section id="home" class="hero">
+                <div class="hero-bg">
+                    <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Luxury Interior" class="parallax-img">
+                    <div class="overlay"></div>
+                </div>
+                <div class="hero-content">
+                    <p class="hero-subtitle reveal-text">Interior Studio</p>
+                    <h1 class="hero-title">
+                        <span class="line-wrapper"><span class="line-text">Creating</span></span>
+                        <span class="line-wrapper"><span class="line-text">Spaces For</span></span>
+                        <span class="line-wrapper"><span class="line-text italic-text">Better Living</span></span>
+                    </h1>
+                    <div class="hero-scroll magnetic-element">
+                        <p>Scroll to explore</p>
+                        <div class="scroll-indicator"></div>
+                    </div>
+                </div>
+            </section>
 
-    <!-- ======================================================================
-         MAIN APP CONTAINER (SPA ROUTER)
-         ====================================================================== -->
-    <main id="app">
+            <!-- About Section -->
+            <section id="about" class="about section-padding">
+                <div class="container">
+                    <div class="about-grid">
+                        <div class="about-text-col fade-up">
+                            <p class="section-subtitle">01 — Our Approach</p>
+                            <h2 class="section-title">You Dream,<br><span class="italic-text">We Capture</span></h2>
+                            <p class="about-desc">Let us bring your ideas to life! Formed by a love of history, we love keeping as much of the bones of a structure as we can. Marrying in your personality is what really brings a home together!</p>
+                            <p class="about-desc">Communication is key. We're here for whatever you need. We'll help you solidify your vision and keep in constant contact until your dream is realized.</p>
+                            <a href="#contact" class="btn magnetic-element">Book Now</a>
+                        </div>
+                        <div class="about-img-col">
+                            <div class="img-wrapper reveal-img">
+                                <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Interior Detail" class="parallax-img" data-speed="0.2" loading="lazy">
+                            </div>
+                            <div class="experience-badge fade-up" data-delay="0.3">
+                                <span class="years">10+</span>
+                                <span class="text">Years of<br>Excellence</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-        <!-- ==================================================================
-             VIEW: HOME (3D Explosions)
-             ================================================================== -->
-        <div class="view active" id="view-home">
-            
-            <section class="hero-3d-wrapper home-element">
-                <div class="hero-3d-sticky">
-                    <div class="hero-title-box">
-                        <p class="text-caption">PG Design Interior Studio</p>
-                        <h1 class="text-massive">Crafting<br><span class="italic" style="color:var(--accent)">Spaces.</span></h1>
+            <!-- Services Section -->
+            <section id="services" class="services section-padding dark-section">
+                <div class="container">
+                    <div class="section-header fade-up">
+                        <p class="section-subtitle">02 — Expertise</p>
+                        <h2 class="section-title">Our <span class="italic-text">Services</span></h2>
                     </div>
                     
-                    <!-- 3D Shatter Images (Paste your Google Share Image Links inside src="") -->
-                    <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwequlZEm3v_1frkmLkfjzt0nnIwWp_3BG_0-Pj9OrFlBfic4fhXVUEaIM57nToda_qzo39-6hBN3ekr1PoqJ-ZS59lXABmP7oDFtm2WaEOCVAngcv4HyONIir63bevn8TAlld26B=s1360-w1360-h1020-rw" class="shatter-item s-img-1" alt="Interior 1">
-                    <img src="https://lh3.googleusercontent.com/p/AF1QipOXIGokBKlc6vLKYQH97ugd8xftYVBVNN4xcnnu=s1360-w1360-h1020-rw" class="shatter-item s-img-2" alt="Interior 2">
-                    <img src="https://lh3.googleusercontent.com/p/AF1QipNeI1UBLmlXu3ciaHTuvkhb0mzesoCoBeB3RzUS=s1360-w1360-h1020-rw" class="shatter-item s-img-3" alt="Interior 3">
-                    <img src="https://lh3.googleusercontent.com/p/AF1QipPRTgsULW9d4bcO15QYZqeen7m5swurIptMi5_H=w141-h176-n-k-no-nu" class="shatter-item s-img-4" alt="Interior 4">
-                    <img src="https://lh3.googleusercontent.com/p/AF1QipMB5Vv6irk3CG-h5ycLYXDtkhi2uhlYdaSehc4E=w141-h101-n-k-no-nu" class="shatter-item s-img-5" alt="Interior 5">
-                    <img src="https://lh3.googleusercontent.com/p/AF1QipPQ2CPBrqGC4uk7Ypl_Q_xeIauO89L09Ah0PG9k=s1360-w1360-h1020-rw" class="shatter-item s-img-6" alt="Interior 6">
-                </div>
-            </section>
-
-            <!-- Infinite Marquee -->
-            <section class="marquee-section home-element">
-                <div class="marquee-content">
-                    <h2>Thodupuzha's Best</h2><h2>•</h2>
-                    <h2>4.9 Star Rating</h2><h2>•</h2>
-                    <h2>Modular Kitchens</h2><h2>•</h2>
-                    <h2>Living Spaces</h2><h2>•</h2>
-                    <h2>Thodupuzha's Best</h2><h2>•</h2>
-                    <h2>4.9 Star Rating</h2><h2>•</h2>
-                    <h2>Modular Kitchens</h2><h2>•</h2>
-                    <h2>Living Spaces</h2><h2>•</h2>
-                </div>
-            </section>
-
-            <section class="section container home-element text-center" style="padding: 20vh 0;">
-                <h2 class="text-body-lg" style="max-width: 1000px; margin: 0 auto; line-height: 1.6;">
-                    PG Design is one of the most trusted and versatile interior designers in Thodupuzha and across Kerala. We don't just decorate spaces; we offer the most effective space planning tailored perfectly to your needs.
-                </h2>
-                <button class="magnetic-btn hover-target mag-target" onclick="navigate('booking', event)" style="margin-top: 4rem;">
-                    <span>Client Portal</span>
-                </button>
-            </section>
-        </div>
-
-        <!-- ==================================================================
-             VIEW: ABOUT (Parallax Storytelling & Real Data)
-             ================================================================== -->
-        <div class="view" id="view-about">
-            <section class="container parallax-header">
-                <div>
-                    <p class="text-caption">The Studio Manifesto</p>
-                    <h1 class="text-hero">Built on<br>Precision.</h1>
-                </div>
-            </section>
-
-            <section class="container section about-grid">
-                <div class="grid-2">
-                    <div>
-                        <h3 class="text-h3">Our Foundation</h3>
-                        <p class="text-body" style="margin-top: 2rem; color: var(--text-muted);">
-                            PG Design is one of the trusted interior designers in Thodupuzha, Kerala. Known as one of the best interior designers with experienced professional talents, we are renowned for manufacturing modular kitchens, dining areas, bedrooms, and living spaces. 
-                            <br><br>
-                            If you are looking for flat or apartment interior designers in Thodupuzha, Ernakulam, or anywhere in Kerala, PG Design is glad to be of service. With years of expertise, we offer you the most effective space planning tailored to your exact lifestyle.
-                        </p>
-                        <p class="text-caption" style="margin-top: 2rem;">HQ: BK Tower, SH 40, Thodupuzha, Idukki-685584, Kerala</p>
-                    </div>
-                    <div class="grid-2" style="gap: 2rem;">
-                        <div class="stat-box">
-                            <h3 class="counter" data-target="24">0</h3>
-                            <p class="text-caption" style="margin-top: 1rem;">Verified Reviews</p>
+                    <div class="services-list">
+                        <div class="service-item fade-up hover-target" data-delay="0.1">
+                            <div class="service-num">01</div>
+                            <div class="service-title-wrap">
+                                <h3 class="service-title">Residential Design</h3>
+                                <p class="service-desc">Crafting beautiful, functional living spaces that reflect your personal style and enhance your daily life.</p>
+                            </div>
+                            <div class="service-img">
+                                <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Residential" loading="lazy">
+                            </div>
+                            <div class="service-arrow">↗</div>
                         </div>
-                        <div class="stat-box">
-                            <h3 class="counter" data-target="4.9" data-float="true">0.0</h3>
-                            <p class="text-caption" style="margin-top: 1rem;">Star Rating</p>
+                        <div class="service-item fade-up hover-target" data-delay="0.2">
+                            <div class="service-num">02</div>
+                            <div class="service-title-wrap">
+                                <h3 class="service-title">Commercial Spaces</h3>
+                                <p class="service-desc">Designing inspiring workspaces and retail environments that elevate your brand and engage customers.</p>
+                            </div>
+                            <div class="service-img">
+                                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Commercial" loading="lazy">
+                            </div>
+                            <div class="service-arrow">↗</div>
+                        </div>
+                        <div class="service-item fade-up hover-target" data-delay="0.3">
+                            <div class="service-num">03</div>
+                            <div class="service-title-wrap">
+                                <h3 class="service-title">Renovation</h3>
+                                <p class="service-desc">Transforming existing structures with a deep respect for history, preserving the bones while modernizing the feel.</p>
+                            </div>
+                            <div class="service-img">
+                                <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Renovation" loading="lazy">
+                            </div>
+                            <div class="service-arrow">↗</div>
                         </div>
                     </div>
                 </div>
-
-                <div class="parallax-img-container">
-                    <!-- About Section Image -->
-                    <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepYvJj6YhybMhjkIoIunvWQ29_nYyKNdYnPdC4v1kQlrG9iOQX4wa74qcqWFWA5zl890huXrttP-Fo1Sag4AGkiXimpFfuI23YGS-vnHINnLXhxgPXm7amovS0NBrpFvjpN3mp_Dg=w141-h176-n-k-no-nu" alt="Studio" class="p-img">
-                </div>
-            </section>
-        </div>
-
-        <!-- ==================================================================
-             VIEW: SERVICES (Sticky Layers & Animated SVG Paths)
-             ================================================================== -->
-        <div class="view" id="view-services">
-            <section class="container" style="padding-top: 15vh;">
-                <p class="text-caption">Versatile Capabilities</p>
-                <h1 class="text-hero">Our Expertise.</h1>
             </section>
 
-            <section class="container services-wrapper">
-                
-                <!-- SVG Draw Path -->
-                <div class="svg-timeline-col">
-                    <div class="svg-track"></div>
-                    <div class="svg-fill" id="service-path"></div>
+            <!-- Portfolio Section -->
+            <section id="portfolio" class="portfolio section-padding">
+                <div class="container">
+                    <div class="section-header fade-up">
+                        <p class="section-subtitle">03 — Featured Works</p>
+                        <h2 class="section-title">Selected <span class="italic-text">Projects</span></h2>
+                    </div>
                     
-                    <!-- Nodes mapped to layers -->
-                    <div class="timeline-node" id="node-1" style="top: 15vh;"></div>
-                    <div class="timeline-node" id="node-2" style="top: 45vh;"></div>
-                    <div class="timeline-node" id="node-3" style="top: 75vh;"></div>
-                </div>
-
-                <!-- Sticky Stacking Layers -->
-                <div class="sticky-layers-col">
-                    
-                    <!-- Layer 1 -->
-                    <div class="sticky-layer s-layer" id="layer-1">
-                        <div class="layer-icon">01.</div>
-                        <h2 class="text-h2">Modular Kitchens & Dining</h2>
-                        <p class="text-body" style="color: var(--text-muted); margin-top: 1rem;">
-                            The heart of your home. We design and manufacture highly functional, aesthetically pleasing modular kitchens and dining areas that maximize storage without compromising on premium finishes.
-                        </p>
-                        <ul>
-                            <li><span>Custom Cabinetry & Islands</span> <span>+</span></li>
-                            <li><span>Premium Hardware Integration</span> <span>+</span></li>
-                            <li><span>Ergonomic Space Planning</span> <span>+</span></li>
-                        </ul>
+                    <div class="portfolio-grid">
+                        <div class="portfolio-item fade-up hover-target">
+                            <div class="portfolio-img-wrap reveal-img">
+                                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Modern Villa" class="parallax-img" data-speed="0.1" loading="lazy">
+                            </div>
+                            <div class="portfolio-info">
+                                <h3 class="portfolio-title">The Minimalist Haven</h3>
+                                <p class="portfolio-category">Residential</p>
+                            </div>
+                        </div>
+                        <div class="portfolio-item mt-large fade-up hover-target" data-delay="0.2">
+                            <div class="portfolio-img-wrap reveal-img">
+                                <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Urban Apartment" class="parallax-img" data-speed="0.15" loading="lazy">
+                            </div>
+                            <div class="portfolio-info">
+                                <h3 class="portfolio-title">Urban Oasis</h3>
+                                <p class="portfolio-category">Renovation</p>
+                            </div>
+                        </div>
+                        <div class="portfolio-item fade-up hover-target">
+                            <div class="portfolio-img-wrap reveal-img">
+                                <img src="https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Office Space" class="parallax-img" data-speed="0.1" loading="lazy">
+                            </div>
+                            <div class="portfolio-info">
+                                <h3 class="portfolio-title">Creative Studio</h3>
+                                <p class="portfolio-category">Commercial</p>
+                            </div>
+                        </div>
+                        <div class="portfolio-item mt-large fade-up hover-target" data-delay="0.2">
+                            <div class="portfolio-img-wrap reveal-img">
+                                <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Luxury Bathroom" class="parallax-img" data-speed="0.15" loading="lazy">
+                            </div>
+                            <div class="portfolio-info">
+                                <h3 class="portfolio-title">Heritage Revival</h3>
+                                <p class="portfolio-category">Residential</p>
+                            </div>
+                        </div>
                     </div>
-
-                    <!-- Layer 2 -->
-                    <div class="sticky-layer s-layer" id="layer-2">
-                        <div class="layer-icon">02.</div>
-                        <h2 class="text-h2">Flat & Apartment Interiors</h2>
-                        <p class="text-body" style="color: var(--text-muted); margin-top: 1rem;">
-                            Serving Thodupuzha and Ernakulam, we specialize in maximizing space in modern apartments. From custom wardrobes in bedrooms to expansive living space layouts.
-                        </p>
-                        <ul>
-                            <li><span>Bedroom Wardrobes & Styling</span> <span>+</span></li>
-                            <li><span>Living Room Entertainment Units</span> <span>+</span></li>
-                            <li><span>False Ceiling & Lighting</span> <span>+</span></li>
-                        </ul>
-                    </div>
-
-                    <!-- Layer 3 -->
-                    <div class="sticky-layer s-layer" id="layer-3">
-                        <div class="layer-icon">03.</div>
-                        <h2 class="text-h2">Turnkey Execution</h2>
-                        <p class="text-body" style="color: var(--text-muted); margin-top: 1rem;">
-                            We handle everything from civil modifications to the final coat of paint. A seamless, stress-free experience delivered by our experienced professional talents.
-                        </p>
-                        <ul>
-                            <li><span>Project Management</span> <span>+</span></li>
-                            <li><span>Material Procurement</span> <span>+</span></li>
-                            <li><span>Quality Assurance Handover</span> <span>+</span></li>
-                        </ul>
-                    </div>
-
                 </div>
             </section>
-        </div>
 
-        <!-- ==================================================================
-             VIEW: PORTFOLIO (Stacked Card Animations)
-             ================================================================== -->
-        <div class="view" id="view-portfolio">
-            <section class="container" style="padding-top: 15vh;">
-                <p class="text-caption">Selected Case Studies</p>
-                <h1 class="text-hero">The Archive.</h1>
-            </section>
-
-            <section class="container portfolio-stack-wrap">
-                
-                <div class="stack-card port-card">
-                    <!-- Portfolio Image 1 -->
-                    <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweotbijWiA6zT90x3NVurYn3Wv5ORo7e_nY__lVnVDUfMaN2AcaQMJzxAzozMcYBdN-ww_zk-NJUQg4u7xgVoLEWI0eFTbKtYMDexjqXyzwDDeHCkLtrmmYhjwEVLPAkLJjhIci1uw=s1360-w1360-h1020-rw" alt="Kochi Apartment">
-                    <div class="stack-content">
-                        <div>
-                            <div class="tags"><span class="tag">Modular Kitchen</span><span class="tag">Living Area</span></div>
-                            <h2 class="text-h2">The Kochi Apartment</h2>
-                        </div>
-                        <div class="card-stats">
-                            <p>Turnkey Execution</p>
-                            <span class="text-caption">Ernakulam</span>
-                        </div>
+            <!-- Marquee Section -->
+            <div class="marquee-section dark-section">
+                <div class="marquee">
+                    <div class="marquee-inner">
+                        <span>PG DESIGN INTERIOR STUDIO</span>
+                        <span class="star">✧</span>
+                        <span>CREATING SPACES FOR BETTER LIVING</span>
+                        <span class="star">✧</span>
+                        <span>PG DESIGN INTERIOR STUDIO</span>
+                        <span class="star">✧</span>
+                        <span>CREATING SPACES FOR BETTER LIVING</span>
+                        <span class="star">✧</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="stack-card port-card">
-                    <!-- Portfolio Image 2 -->
-                    <img src="https://lh3.googleusercontent.com/p/AF1QipNfxFcz-jEZW89dFqOT3z0RoPF1IEuE2cyVk3yY=s1360-w1360-h1020-rw" alt="Minimalist">
-                    <div class="stack-content">
-                        <div>
-                            <div class="tags"><span class="tag">Flat Interior</span><span class="tag">Bedrooms</span></div>
-                            <h2 class="text-h2">Urban Minimalist</h2>
-                        </div>
-                        <div class="card-stats">
-                            <p>Space Planning</p>
-                            <span class="text-caption">Thodupuzha</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="stack-card port-card">
-                    <!-- Portfolio Image 3 -->
-                    <img src="https://lh3.googleusercontent.com/p/AF1QipMB5Vv6irk3CG-h5ycLYXDtkhi2uhlYdaSehc4E=w141-h101-n-k-no-nu" alt="Studio">
-                    <div class="stack-content">
-                        <div>
-                            <div class="tags"><span class="tag">Commercial</span><span class="tag">Architecture</span></div>
-                            <h2 class="text-h2">Office</h2>
-                        </div>
-                        <div class="card-stats">
-                            <p>Full Renovation</p>
-                            <span class="text-caption">Idukki</span>
-                        </div>
-                    </div>
-                </div>
-
-            </section>
-        </div>
-
-        <!-- ==================================================================
-             VIEW: CLIENT PORTAL / BOOKING (WhatsApp Integration)
-             ================================================================== -->
-        <div class="view" id="view-booking">
-            <section class="container section">
-                <div class="booking-layout">
-                    
-                    <!-- Left Info -->
-                    <div class="booking-info">
-                        <p class="text-caption">Order Register & Consultation</p>
-                        <h1 class="text-h2" style="margin-top: 1rem;">Start Your<br>Project.</h1>
-                        <p class="text-body" style="color: var(--text-muted); margin-top: 2rem;">
-                            Use our Client Portal to register your interior needs. Upon submission, you will be instantly connected to our design team via WhatsApp with your project brief.
-                        </p>
-                        
-                        <div style="margin-top: 4rem;">
-                            <h4 class="text-caption">PG Design Guarantee</h4>
-                            <ul style="list-style: none; margin-top: 1rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 1rem;">
-                                <li>✓ Experienced Professional Talents</li>
-                                <li>✓ Custom Modular Manufacturing</li>
-                                <li>✓ Effective Space Planning</li>
-                                <li>✓ Servicing Thodupuzha & Ernakulam</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Right Form Application -->
-                    <div class="booking-form-container">
-                        
-                        <!-- Progress Bar -->
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="form-progress"></div>
-                        </div>
-
-                        <!-- Form Steps Container -->
-                        <form id="client-portal-form">
+            <!-- Contact Section -->
+            <section id="contact" class="contact section-padding">
+                <div class="container">
+                    <div class="contact-grid">
+                        <div class="contact-info fade-up">
+                            <h2 class="section-title">Book <br><span class="italic-text">Now</span></h2>
+                            <p class="contact-desc">Ready to start your next project? Fill out the details below and message us directly on WhatsApp to get started instantly.</p>
                             
-                            <!-- STEP 1: Project Type -->
-                            <div class="form-step active" id="step-1">
-                                <h3 class="text-h3" style="margin-bottom: 2rem;">1. Project Scope</h3>
-                                
-                                <div class="input-group">
-                                    <label>Type of Space</label>
-                                    <div class="radio-grid">
-                                        <div class="radio-btn selected" onclick="selectRadio(this, 'type')">
-                                            <input type="radio" name="projectType" value="Flat / Apartment" checked>
-                                            Flat / Apartment
-                                        </div>
-                                        <div class="radio-btn" onclick="selectRadio(this, 'type')">
-                                            <input type="radio" name="projectType" value="Independent House / Villa">
-                                            Villa / House
-                                        </div>
-                                        <div class="radio-btn" onclick="selectRadio(this, 'type')">
-                                            <input type="radio" name="projectType" value="Modular Kitchen Only">
-                                            Modular Kitchen
-                                        </div>
-                                        <div class="radio-btn" onclick="selectRadio(this, 'type')">
-                                            <input type="radio" name="projectType" value="Commercial / Office">
-                                            Commercial
-                                        </div>
-                                    </div>
+                            <div class="contact-details">
+                                <div class="detail-item">
+                                    <h4>Visit Us</h4>
+                                    <p>Amruth Sai Arcade, 1st Floor,<br>Mini Bypass Rd, P O, Puthiyara,<br>Kozhikode, Kerala 673004, India</p>
                                 </div>
-
-                                <div class="form-actions" style="justify-content: flex-end;">
-                                    <button type="button" class="btn hover-target" onclick="nextStep(2)">Continue</button>
+                                <div class="detail-item">
+                                    <h4>Contact</h4>
+                                    <p><a href="mailto:info@pgdesign.in" class="hover-target">info@pgdesign.in</a></p>
+                                    <p><a href="tel:+919999999999" class="hover-target">+91 99999 99999</a></p>
                                 </div>
                             </div>
-
-                            <!-- STEP 2: Client Info -->
-                            <div class="form-step" id="step-2">
-                                <h3 class="text-h3" style="margin-bottom: 2rem;">2. Client Details</h3>
-                                
-                                <div class="grid-2" style="gap: 2rem;">
-                                    <div class="input-group">
-                                        <label for="firstName">First Name</label>
-                                        <input type="text" id="firstName" required>
-                                    </div>
-                                    <div class="input-group">
-                                        <label for="lastName">Last Name</label>
-                                        <input type="text" id="lastName" required>
-                                    </div>
-                                </div>
-
-                                <div class="grid-2" style="gap: 2rem;">
-                                    <div class="input-group">
-                                        <label for="phone">WhatsApp Number</label>
-                                        <input type="tel" id="phone" required>
-                                    </div>
-                                    <div class="input-group">
-                                        <label for="location">Project Location (City/Town)</label>
-                                        <input type="text" id="location" placeholder="e.g. Thodupuzha or Ernakulam" required>
-                                    </div>
-                                </div>
-
-                                <div class="form-actions">
-                                    <button type="button" class="btn btn-outline hover-target" onclick="nextStep(1)">Back</button>
-                                    <button type="button" class="btn hover-target" onclick="nextStep(3)">Continue</button>
-                                </div>
+                            
+                            <div class="social-links">
+                                <a href="#" class="hover-target">Instagram</a>
+                                <a href="#" class="hover-target">Facebook</a>
+                                <a href="#" class="hover-target">LinkedIn</a>
                             </div>
-
-                            <!-- STEP 3: Vision -->
-                            <div class="form-step" id="step-3">
-                                <h3 class="text-h3" style="margin-bottom: 2rem;">3. Requirements</h3>
-                                
-                                <div class="input-group">
-                                    <label for="vision">Describe your needs (Rooms, style, timeline)</label>
-                                    <textarea id="vision" rows="5" placeholder="E.g., Need interior for living room and 2 bedrooms, focusing on space planning..." required></textarea>
-                                </div>
-
-                                <div class="form-actions">
-                                    <button type="button" class="btn btn-outline hover-target" onclick="nextStep(2)">Back</button>
-                                    <button type="button" class="magnetic-btn whatsapp hover-target mag-target" onclick="submitToWhatsApp()">
-                                        <span>Connect via WhatsApp</span>
-                                    </button>
-                                </div>
-                            </div>
-
-                        </form>
-
-                        <!-- Success State -->
-                        <div class="success-state" id="form-success">
-                            <div class="success-icon">
-                                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                            </div>
-                            <h3 class="text-h3">Redirecting to WhatsApp...</h3>
-                            <p class="text-body" style="color: var(--text-muted); margin-top: 1rem; margin-bottom: 3rem;">
-                                Your project details have been compiled. Please hit send in WhatsApp to start the conversation with PG Design.
-                            </p>
-                            <button class="btn hover-target" onclick="navigate('home', event)">Return to Home</button>
                         </div>
-
+                        <div class="contact-form fade-up" data-delay="0.2">
+                            <!-- WhatsApp Booking Form -->
+                            <form id="whatsappForm">
+                                <div class="form-group">
+                                    <input type="text" id="waName" required placeholder=" ">
+                                    <label for="waName">Your Name</label>
+                                    <div class="line-border"></div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="tel" id="waPhone" required placeholder=" ">
+                                    <label for="waPhone">Phone Number</label>
+                                    <div class="line-border"></div>
+                                </div>
+                                <div class="form-group">
+                                    <select id="waService" required>
+                                        <option value="" disabled selected>Select a Service</option>
+                                        <option value="Residential Design">Residential Design</option>
+                                        <option value="Commercial Spaces">Commercial Spaces</option>
+                                        <option value="Renovation">Renovation</option>
+                                    </select>
+                                    <div class="line-border"></div>
+                                </div>
+                                <div class="form-group">
+                                    <textarea id="waMessage" rows="4" required placeholder=" "></textarea>
+                                    <label for="waMessage">Project Details / Message</label>
+                                    <div class="line-border"></div>
+                                </div>
+                                <button type="submit" class="submit-btn magnetic-element">
+                                    <span>Book via WhatsApp</span>
+                                    <div class="btn-arrow">
+                                        <!-- WhatsApp SVG Icon -->
+                                        <svg xmlns="http://www.w3.org/.svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                    </div>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="container">
+                    <div class="footer-bottom">
+                        <div class="footer-logo">PG Design</div>
+                        <div class="copyright">
+                            &copy; <span id="year"></span> PGDesign.in - All Rights Reserved.<br>
+                            BK CHAKKARATH SOLUTIONS PRIVATE LIMITED.
+                        </div>
+                        <a href="#home" class="back-to-top magnetic-element">Back to Top ↑</a>
+                    </div>
+                </div>
+            </footer>
         </div>
-
-        <!-- ==================================================================
-             GLOBAL FOOTER
-             ================================================================== -->
-        <footer>
-            <div class="container footer-grid">
-                <div>
-                    <h2 class="text-h2" style="font-size: 3rem; margin-bottom: 1rem;">PG Design.</h2>
-                    <p class="text-body" style="color: var(--text-muted); max-width: 300px;">
-                        The most versatile and best interior designers in Kerala.
-                    </p>
-                </div>
-                <div>
-                    <h4 class="text-caption" style="margin-bottom: 1.5rem; color: white;">Contact</h4>
-                    <p style="text-transform: none; margin-bottom: 0.5rem;">BK Tower, SH 40</p>
-                    <p style="text-transform: none; margin-bottom: 0.5rem;">Thodupuzha, Idukki-685584</p>
-                    <p style="text-transform: none;">Kerala, India</p>
-                    <p style="text-transform: none; color: var(--accent); margin-top: 1rem;">+91 95444 49585</p>
-                </div>
-                <div>
-                    <h4 class="text-caption" style="margin-bottom: 1.5rem; color: white;">Business Hours</h4>
-                    <p style="color:var(--text-muted); margin-bottom: 0.5rem;">Monday - Saturday</p>
-                    <p style="color:var(--text-muted); margin-bottom: 0.5rem;">9:00 AM - 6:00 PM</p>
-                    <p style="color: var(--accent); margin-top: 1rem;">Rating: 4.9/5 (24 Reviews)</p>
-                </div>
-            </div>
-            <div class="container" style="display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2rem;">
-                <p>© 2026 PG Design Interior Studio. All Rights Reserved.</p>
-                <p>Premium Space Planning</p>
-            </div>
-        </footer>
-
     </main>
 
-    <!-- ==========================================================================
-         JAVASCRIPT ENGINE (Router + WhatsApp Form + GSAP + Lenis)
-         ========================================================================== -->
-    <script>
-        /* --- 1. CORE: LENIS SMOOTH SCROLL --- */
-        const lenis = new Lenis({
-            duration: 1.6, // Premium weight
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            direction: 'vertical', gestureDirection: 'vertical',
-            smooth: true,
-        });
-
-        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-        requestAnimationFrame(raf);
-
-        gsap.registerPlugin(ScrollTrigger);
-        
-        // Sync Lenis with ScrollTrigger
-        lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add((time)=>{ lenis.raf(time * 1000) });
-        gsap.ticker.lagSmoothing(0, 0);
-
-        /* --- 2. GLOBAL UI: CURSOR & HOVERS --- */
-        const cursorDot = document.querySelector('.cursor-dot');
-        const cursorRing = document.querySelector('.cursor-ring');
-        
-        window.addEventListener('mousemove', (e) => {
-            gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0.1 });
-            gsap.to(cursorRing, { x: e.clientX, y: e.clientY, duration: 0.5, ease: "power2.out" });
-        });
-
-        function initHoverEffects() {
-            document.querySelectorAll('.hover-target, button, input, textarea, select, a, .radio-btn').forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    gsap.to(cursorRing, { width: 60, height: 60, backgroundColor: 'rgba(255,255,255,0.1)', borderColor: 'transparent', backdropFilter: 'blur(4px)', duration: 0.3 });
-                });
-                el.addEventListener('mouseleave', () => {
-                    gsap.to(cursorRing, { width: 40, height: 40, backgroundColor: 'transparent', borderColor: 'rgba(255,255,255,0.3)', backdropFilter: 'none', duration: 0.3 });
-                });
-            });
-
-            // Magnetic Physics
-            document.querySelectorAll('.mag-target').forEach(btn => {
-                btn.addEventListener('mousemove', function(e) {
-                    const rect = this.getBoundingClientRect();
-                    const x = e.clientX - rect.left - rect.width / 2;
-                    const y = e.clientY - rect.top - rect.height / 2;
-                    gsap.to(this, { x: x * 0.4, y: y * 0.4, duration: 0.4, ease: 'power2.out' });
-                    gsap.to(this.querySelector('span'), { x: x * 0.2, y: y * 0.2, duration: 0.4, ease: 'power2.out' });
-                });
-                btn.addEventListener('mouseleave', function() {
-                    gsap.to(this, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.3)' });
-                    gsap.to(this.querySelector('span'), { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.3)' });
-                });
-            });
-        }
-
-        /* --- 3. ANIMATION ENGINES PER PAGE --- */
-        let currentTriggers = [];
-
-        function initHomeAnimations() {
-            // A. 3D Explosion Effect
-            const expTl = gsap.timeline({
-                scrollTrigger: { trigger: ".hero-3d-wrapper", start: "top top", end: "bottom bottom", scrub: 1 }
-            });
-            
-            // Randomize starting depth positions
-            const items = gsap.utils.toArray('.shatter-item');
-            items.forEach((item, i) => {
-                // Start far away and rotated
-                gsap.set(item, { scale: 0, opacity: 0, z: -1000, rotationX: Math.random()*90 - 45, rotationY: Math.random()*90 - 45 });
-                
-                // Explode outwards past the camera
-                expTl.to(item, {
-                    opacity: 1,
-                    scale: 1.5 + (Math.random() * 1),
-                    z: 500,
-                    x: (Math.random() * 100 - 50) + "vw",
-                    y: (Math.random() * 100 - 50) + "vh",
-                    rotationX: 0, rotationY: 0,
-                    ease: "power1.inOut"
-                }, i * 0.05); // Stagger
-            });
-
-            expTl.to('.hero-title-box', { scale: 2, opacity: 0, filter: "blur(20px)" }, 0.2);
-            currentTriggers.push(expTl.scrollTrigger);
-        }
-
-        function initAboutAnimations() {
-            // Parallax Images
-            const img = document.querySelector('.p-img');
-            if(img){
-                const st = gsap.to(img, {
-                    yPercent: 30, ease: "none",
-                    scrollTrigger: { trigger: ".parallax-img-container", start: "top bottom", end: "bottom top", scrub: true }
-                });
-                currentTriggers.push(st.scrollTrigger);
-            }
-
-            // Stat Counters
-            document.querySelectorAll('.counter').forEach(counter => {
-                const target = parseFloat(counter.getAttribute('data-target'));
-                const isFloat = counter.getAttribute('data-float') === 'true';
-                
-                const st = ScrollTrigger.create({
-                    trigger: counter, start: "top 80%", once: true,
-                    onEnter: () => {
-                        gsap.to(counter, {
-                            innerHTML: target, duration: 2, ease: "power2.out", snap: { innerHTML: isFloat ? 0.1 : 1 },
-                            onUpdate: function() { counter.innerHTML = isFloat ? Number(this.targets()[0].innerHTML).toFixed(1) : Math.round(this.targets()[0].innerHTML); }
-                        });
-                    }
-                });
-                currentTriggers.push(st);
-            });
-        }
-
-        function initServicesAnimations() {
-            // A. Sticky Layered Reveal Parallax
-            const layers = gsap.utils.toArray('.s-layer');
-            layers.forEach((layer, i) => {
-                if (i === layers.length - 1) return;
-                const st = gsap.to(layer, {
-                    scale: 0.95, opacity: 0.5,
-                    scrollTrigger: { trigger: layers[i + 1], start: "top 40%", end: "top 15%", scrub: true }
-                });
-                currentTriggers.push(st.scrollTrigger);
-            });
-
-            // B. Animated SVG Line & Nodes
-            const fillLine = document.getElementById('service-path');
-            const nodes = [document.getElementById('node-1'), document.getElementById('node-2'), document.getElementById('node-3')];
-            
-            if(fillLine) {
-                const stLine = gsap.to(fillLine, {
-                    scaleY: 1, ease: "none",
-                    scrollTrigger: { trigger: ".sticky-layers-col", start: "top 30%", end: "bottom 80%", scrub: true }
-                });
-                currentTriggers.push(stLine.scrollTrigger);
-            }
-
-            layers.forEach((layer, i) => {
-                const stNode = ScrollTrigger.create({
-                    trigger: layer, start: "top 50%", end: "bottom 50%",
-                    onEnter: () => nodes[i].classList.add('active'),
-                    onLeaveBack: () => nodes[i].classList.remove('active')
-                });
-                currentTriggers.push(stNode);
-            });
-        }
-
-        function initPortfolioAnimations() {
-            // Stacked Card Parallax with 3D tilt
-            const cards = gsap.utils.toArray('.port-card');
-            cards.forEach((card, index) => {
-                if (index === cards.length - 1) return;
-                const st = gsap.to(card, {
-                    scale: 0.90, opacity: 0.4, rotationX: 5, transformPerspective: 1000,
-                    scrollTrigger: { trigger: cards[index + 1], start: "top 40%", end: "top 10%", scrub: true }
-                });
-                currentTriggers.push(st.scrollTrigger);
-            });
-        }
-
-
-        /* --- 4. SPA ROUTER SYSTEM --- */
-        function navigate(viewId, event) {
-            if(event) event.preventDefault();
-            
-            // UI Active states
-            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
-            if(event) {
-                if(event.target.classList.contains('nav-link')) event.target.classList.add('active');
-            }
-
-            const currentView = document.querySelector('.view.active');
-            const nextView = document.getElementById(`view-${viewId}`);
-            if(currentView === nextView) return;
-
-            // Page Transition Sequence
-            const tl = gsap.timeline();
-            
-            tl.to('.page-transition', { y: '0%', duration: 0.8, ease: "power4.inOut" })
-              .to('.transition-text', { opacity: 1, y: -20, duration: 0.4 }, "-=0.4")
-              .call(() => {
-                  // Clean up old state
-                  currentTriggers.forEach(t => t.kill());
-                  currentTriggers = [];
-                  ScrollTrigger.refresh();
-                  lenis.scrollTo(0, { immediate: true });
-
-                  // Swap DOM
-                  currentView.classList.remove('active');
-                  nextView.classList.add('active');
-
-                  // Initialize new page animations
-                  if(viewId === 'home') initHomeAnimations();
-                  if(viewId === 'about') initAboutAnimations();
-                  if(viewId === 'services') initServicesAnimations();
-                  if(viewId === 'portfolio') initPortfolioAnimations();
-                  
-                  initHoverEffects();
-              })
-              .to('.transition-text', { opacity: 0, y: 20, duration: 0.3 }, "+=0.2")
-              .to('.page-transition', { y: '-100%', duration: 0.8, ease: "power4.inOut" })
-              .set('.page-transition', { y: '100%' }); // Reset
-        }
-
-
-        /* --- 5. FUNCTIONAL CLIENT PORTAL LOGIC (WhatsApp Connect) --- */
-        function selectRadio(element, group) {
-            const parent = element.parentElement;
-            parent.querySelectorAll('.radio-btn').forEach(btn => btn.classList.remove('selected'));
-            element.classList.add('selected');
-            element.querySelector('input').checked = true;
-        }
-
-        function nextStep(stepNumber) {
-            // Basic validation for Step 2
-            if(stepNumber === 3) {
-                const fname = document.getElementById('firstName').value;
-                const phone = document.getElementById('phone').value;
-                if(!fname || !phone) {
-                    alert("Please fill in your Name and Phone Number to continue.");
-                    return;
-                }
-            }
-
-            // Update UI
-            document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
-            document.getElementById(`step-${stepNumber}`).classList.add('active');
-            
-            // Update Progress Bar
-            const progressFill = document.getElementById('form-progress');
-            if(stepNumber === 1) progressFill.style.width = '33%';
-            if(stepNumber === 2) progressFill.style.width = '66%';
-            if(stepNumber === 3) progressFill.style.width = '100%';
-        }
-
-        function submitToWhatsApp() {
-            // Get values
-            const typeNode = document.querySelector('input[name="projectType"]:checked');
-            const type = typeNode ? typeNode.value : "Interior Design";
-            const fname = document.getElementById('firstName').value || "Client";
-            const lname = document.getElementById('lastName').value || "";
-            const phone = document.getElementById('phone').value || "Not Provided";
-            const loc = document.getElementById('location').value || "Not Provided";
-            const vision = document.getElementById('vision').value || "General Inquiry";
-
-            // Construct WhatsApp Message
-            const message = `Hello PG Design Team! 👋%0A%0AI would like to discuss a new interior project.%0A%0A*Client Details:*%0A👤 Name: ${fname} ${lname}%0A📍 Location: ${loc}%0A📱 Phone: ${phone}%0A%0A*Project Scope:*%0A🏢 Type: ${type}%0A%0A*Requirements / Vision:*%0A📝 ${vision}%0A%0ALooking forward to hearing from you!`;
-
-            // PG Design WhatsApp Number
-            const pgDesignPhone = "919544449585"; 
-            const whatsappUrl = `https://wa.me/${pgDesignPhone}?text=${message}`;
-
-            // Show success state in UI
-            document.getElementById('client-portal-form').style.display = 'none';
-            const successDiv = document.getElementById('form-success');
-            successDiv.style.display = 'block';
-            
-            gsap.from(successDiv, { opacity: 0, y: 30, duration: 0.8, ease: "power3.out" });
-            document.getElementById('form-progress').style.background = 'var(--whatsapp)';
-
-            // Open WhatsApp in new tab
-            window.open(whatsappUrl, '_blank');
-        }
-
-        /* --- 6. BOOTSTRAP --- */
-        window.addEventListener('load', () => {
-            initHoverEffects();
-            initHomeAnimations(); 
-        });
-
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
