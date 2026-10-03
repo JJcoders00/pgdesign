@@ -1,287 +1,926 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PG Design | Interior Studio</title>
-    <meta name="description" content="PG Design Interior Studio - Creating spaces for better living. You dream, we capture. Let us bring your ideas to life!">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PG Design | You dream, we capture</title>
+<meta name="description" content="PG Design Interior Studio. You dream, we capture. Creating spaces for better living.">
+<meta name="theme-color" content="#1C1511">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<noscript><style>.loader{display:none!important}</style></noscript>
+<style>
+:root{
+  --lime:#EFE9DD;--paper:#F6F2EA;--walnut:#1C1511;--umber:#3A2A20;
+  --brick:#B04A2A;--blush:#E9BBA8;--sun:#F4B33F;--ash:#8C857A;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;
+  --sans:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --ease:cubic-bezier(.77,0,.18,1);--out:cubic-bezier(.16,1,.3,1);
+  --pad:clamp(18px,3.2vw,48px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:var(--walnut)}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
+body{font-family:var(--sans);background:var(--paper);color:var(--walnut);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0}
+:focus-visible{outline:2px solid var(--sun);outline-offset:4px}
+::selection{background:var(--brick);color:var(--paper)}
+.serif{font-family:var(--serif);font-optical-sizing:auto;font-variation-settings:"SOFT" 100,"WONK" 0}
+em.i{font-family:var(--serif);font-style:italic;font-weight:300;font-variation-settings:"SOFT" 100,"WONK" 1}
+.eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:500}
+.mask{display:block;overflow:hidden;padding:.06em 0 .18em;margin:-.06em 0 -.18em}
+.rise{display:inline-block;will-change:transform}
+.mask .rise{display:block}
+.wmask{display:inline-block;overflow:hidden;vertical-align:top;padding:.06em .04em .2em;margin:-.06em -.04em -.2em}
+.fw{display:inline}
+
+/* ============ loader ============ */
+.loader{position:fixed;inset:0;background:var(--walnut);color:var(--paper);z-index:1000;clip-path:inset(0 0 0 0);overflow:hidden}
+.ld-top,.ld-bot{position:absolute;left:var(--pad);right:var(--pad);display:flex;justify-content:space-between;align-items:flex-end;font-size:11px;letter-spacing:.22em;text-transform:uppercase}
+.ld-top{top:26px}.ld-bot{bottom:26px}
+.ld-bot .ld-line{letter-spacing:.22em}
+@media(max-width:720px){.ld-top{font-size:9px;letter-spacing:.14em}.ld-bot{font-size:9px;letter-spacing:.14em}.ld-clock{font-size:34px}.ld-line{display:none}.ld-top span:last-child{display:none}}
+.ld-scene{position:absolute;left:50%;top:50%;width:min(66vw,400px);height:min(33vw,200px);transform:translate(-50%,-50%);overflow:hidden;border-bottom:1px solid rgba(246,242,234,.5)}
+.ld-sun{position:absolute;left:50%;top:0;width:min(66vw,400px);aspect-ratio:1;margin-left:calc(min(66vw,400px) / -2);border-radius:50%;background:radial-gradient(circle at 50% 40%,#FFD58A,#F4B33F 55%,#E0782E)}
+.ld-clock{font-family:var(--serif);font-size:clamp(40px,7vw,96px);font-weight:200;line-height:.8;letter-spacing:-.03em;text-transform:none}
+.ld-line{font-family:var(--serif);font-style:italic;font-size:15px;letter-spacing:0;text-transform:none;opacity:.8}
+.ld-burst{position:absolute;inset:0;background:var(--sun);clip-path:circle(0% at 50% 52%)}
+
+/* ============ nav ============ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:400;display:flex;align-items:center;justify-content:space-between;padding:20px var(--pad);color:#fff;mix-blend-mode:difference}
+.logo{display:flex;align-items:center;gap:11px;font-family:var(--serif);font-size:25px;font-weight:400;letter-spacing:-.02em;line-height:1}
+.logo svg{width:22px;height:26px;flex:none}
+.logo i{font-style:italic;font-variation-settings:"SOFT" 100,"WONK" 1;font-weight:300}
+.nav-links{display:flex;gap:34px}
+.nav-links a{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;position:relative;padding:6px 0}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .6s var(--ease)}
+.nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+.nav-r{display:flex;align-items:center;gap:18px}
+.nav-cta{border:1px solid currentColor;border-radius:99px;padding:11px 20px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;transition:background .4s,color .4s}
+.nav-cta:hover{background:#fff;color:#000}
+.burger{display:none;width:30px;height:12px;position:relative;cursor:pointer}
+.burger::before,.burger::after{content:"";position:absolute;left:0;width:100%;height:1px;background:#fff;transition:transform .6s var(--ease),top .6s var(--ease)}
+.burger::before{top:2px}.burger::after{top:10px}
+.burger.open::before{top:6px;transform:rotate(22deg)}.burger.open::after{top:6px;transform:rotate(-22deg)}
+@media(max-width:900px){.nav-links{display:none}.burger{display:block}.nav-cta{display:none}}
+.menu{position:fixed;inset:0;z-index:390;background:var(--walnut);color:var(--paper);display:flex;flex-direction:column;justify-content:center;padding:0 var(--pad);clip-path:inset(0 0 100% 0);visibility:hidden}
+.menu a{display:block;font-family:var(--serif);font-weight:300;font-size:clamp(44px,13vw,90px);line-height:1.08;border-bottom:1px solid rgba(246,242,234,.15);padding:.1em 0;overflow:hidden}
+.menu a span{display:block}
+
+/* ============ hero v2 — centered typographic over three photos ============ */
+.hero{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:100svh;max-height:1080px;position:relative;overflow:hidden;padding:clamp(96px,14vh,150px) var(--pad) clamp(72px,10vh,110px);--mx:50%;--my:40%;background:var(--walnut);color:#F7F1E6}
+.hero-slides{position:absolute;inset:-5%;z-index:0}
+.hslide{position:absolute;inset:0;overflow:hidden;opacity:0;visibility:hidden;transition:opacity 1.2s ease,visibility 1.2s}
+.hslide.on{opacity:1;visibility:visible}
+.hslide img{width:100%;height:100%;object-fit:cover;transform:scale(1.14)}
+.hshade{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at 50% 36%,rgba(28,21,17,.28) 0%,rgba(28,21,17,.55) 62%,rgba(28,21,17,.88) 100%)}
+.hero-grid{position:absolute;inset:0;z-index:2;pointer-events:none;
+  background-image:linear-gradient(rgba(246,242,234,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(246,242,234,.05) 1px,transparent 1px);
+  background-size:80px 80px;
+  -webkit-mask-image:radial-gradient(ellipse 70% 55% at 50% 42%,transparent 0%,rgba(0,0,0,.45) 62%,#000 100%);
+  mask-image:radial-gradient(ellipse 70% 55% at 50% 42%,transparent 0%,rgba(0,0,0,.45) 62%,#000 100%)}
+.hero-head{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;gap:clamp(26px,4vh,44px);width:100%}
+.hero-kicker{display:flex;align-items:center;gap:16px;font-size:11px;letter-spacing:.24em;text-transform:uppercase;opacity:.9}
+.hero-kicker::before,.hero-kicker::after{content:"";width:34px;height:1px;background:currentColor;opacity:.6}
+.hero-title2{font-family:var(--serif);font-weight:300;font-size:clamp(52px,11.6vw,226px);line-height:.86;letter-spacing:-.05em;font-variation-settings:"SOFT" 100,"WONK" 0}
+.hero-title2 em.i{color:var(--blush)}
+.hero-title2 .ln{display:block;overflow:hidden;padding:.05em 0 .16em;margin:-.05em 0 -.16em}
+.hero-title2 .ln .rise{display:block}
+.hero-sub{position:relative;z-index:3;margin-top:clamp(22px,3.6vh,42px);display:flex;flex-direction:column;align-items:center;gap:26px}
+.hero-sub p{font-family:var(--serif);font-weight:300;font-size:clamp(18px,1.6vw,26px);line-height:1.3;max-width:34ch;opacity:.94}
+.hero-sub p em{color:var(--blush)}
+.hero-pill{display:inline-flex;align-items:center;gap:14px;border:1px solid rgba(246,242,234,.5);border-radius:99px;padding:15px 26px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;position:relative;overflow:hidden;z-index:0;cursor:pointer;transition:color .5s,border-color .5s}
+.hero-pill::before{content:"";position:absolute;inset:0;background:var(--paper);transform:translateY(101%);transition:transform .7s var(--ease);z-index:-1;border-radius:inherit}
+.hero-pill:hover{color:var(--walnut);border-color:var(--paper)}.hero-pill:hover::before{transform:none}
+.hero-scroll2{position:absolute;left:50%;bottom:clamp(22px,4vh,42px);transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:10px;font-size:9px;letter-spacing:.24em;text-transform:uppercase;opacity:.75;cursor:pointer}
+.hero-scroll2::after{content:"";width:1px;height:44px;background:currentColor;transform-origin:top;animation:scrollline 2.1s var(--ease) infinite}
+@keyframes scrollline{0%{transform:scaleY(0);transform-origin:top}48%{transform:scaleY(1);transform-origin:top}52%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.hdots{position:absolute;right:calc(var(--pad) + 6px);top:50%;transform:translateY(-50%);z-index:4;display:flex;flex-direction:column;gap:12px}
+.hdot{width:24px;height:3px;border:0;padding:0;background:rgba(246,242,234,.3);cursor:pointer;transition:background .4s,width .5s var(--ease)}
+.hdot.on{background:var(--sun);width:38px}
+@media(max-width:860px){.hero{min-height:94svh;padding:92px 20px 96px}.hdots{right:12px}.hero-kicker{font-size:9.5px;letter-spacing:.18em;gap:10px}.hero-kicker::before,.hero-kicker::after{width:20px}}
+
+/* ============ manifesto ============ */
+.manifesto{background:var(--paper);padding:clamp(110px,20vh,220px) var(--pad) clamp(80px,14vh,160px);position:relative}
+section,footer{padding-left:var(--pad);padding-right:var(--pad)}
+@media(max-width:720px){section{padding-left:20px;padding-right:20px}.foot-in{padding-left:20px;padding-right:20px}.lattice{background-size:56px 56px}}
+.manifesto .eyebrow{margin-bottom:clamp(36px,7vh,80px);display:flex;align-items:center;gap:16px}
+.manifesto .eyebrow::before{content:"";width:40px;height:1px;background:currentColor}
+.m-text{font-family:var(--serif);font-weight:300;font-size:clamp(32px,5.6vw,96px);line-height:1.06;letter-spacing:-.035em;max-width:17em;font-variation-settings:"SOFT" 100,"WONK" 0}
+.m-text em.i{color:var(--brick)}
+.chip{display:inline-block;width:1.9em;height:.76em;border-radius:99px;overflow:hidden;vertical-align:-.04em;margin:0 .06em;background:#d8cdbb}
+.chip img{width:100%;height:100%;object-fit:cover}
+.chip.arch{width:.82em;height:1em;border-radius:99px 99px 8px 8px;vertical-align:-.08em}
+.m-foot{margin-top:clamp(50px,9vh,110px);display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap}
+.m-foot p{max-width:380px;font-size:15px;line-height:1.7;color:rgba(28,21,17,.75)}
+
+/* ============ panels ============ */
+.panels{background:var(--lime);padding:clamp(80px,13vh,150px) var(--pad) clamp(80px,13vh,150px)}
+.panels-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:clamp(34px,6vh,70px)}
+.panels-head h2{font-family:var(--serif);font-weight:300;font-size:clamp(44px,7.4vw,130px);line-height:.9;letter-spacing:-.045em}
+.panels-head h2 em.i{color:var(--brick)}
+.panel-row{display:flex;gap:clamp(10px,1.4vw,22px);height:min(78vh,760px)}
+.panel{position:relative;flex:1;min-width:0;overflow:hidden;border-radius:999px 999px 0 0;background:#cdbfa8;color:var(--paper);cursor:pointer;transition:flex .95s var(--ease);outline-offset:-4px}
+.panel.on{flex:3.6}
+.panel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.12);transition:transform 1.6s var(--out)}
+.panel.on img{transform:scale(1)}
+.p-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,21,17,.12) 30%,rgba(28,21,17,.78) 100%);transition:background .8s}
+.panel:not(.on) .p-shade{background:linear-gradient(180deg,rgba(28,21,17,.38),rgba(28,21,17,.7))}
+.p-col{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:22px;padding-bottom:34px;transition:opacity .5s}
+.panel.on .p-col{opacity:0;pointer-events:none}
+.p-vert{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--serif);font-size:clamp(24px,2.6vw,42px);font-weight:300;letter-spacing:-.01em;white-space:nowrap}
+.p-col .eyebrow{opacity:.85}
+.p-body{position:absolute;left:clamp(20px,4vw,64px);right:clamp(20px,4vw,64px);bottom:clamp(24px,4vw,56px);opacity:0;transform:translateY(24px);transition:opacity .6s,transform .9s var(--out)}
+.panel.on .p-body{opacity:1;transform:none;transition-delay:.45s}
+.p-body h3{font-family:var(--serif);font-weight:300;font-size:clamp(38px,5vw,84px);line-height:.95;letter-spacing:-.04em;margin:12px 0 18px}
+.p-body p{max-width:46ch;font-size:clamp(14px,1.05vw,16.5px);line-height:1.7;opacity:.92}
+@media(max-width:860px){
+  .panel-row{flex-direction:column;height:auto}
+  .panel{flex:none;height:15vh;border-radius:90px 90px 0 0;transition:height .9s var(--ease)}
+  .panel.on{height:64vh;flex:none}
+  .p-col{flex-direction:row;justify-content:flex-start;align-items:center;padding:0 24px}
+  .p-vert{writing-mode:horizontal-tb;transform:none;font-size:26px}
+}
+
+/* ============ scroll sequence ============ */
+.seq-track{height:340vh;position:relative}
+.seq-stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#EBCDBA;color:#2A1A12}
+.sun{position:absolute;left:0;top:0;width:min(30vmin,300px);aspect-ratio:1;border-radius:50%;background:currentColor;color:#F7A56B;z-index:0;will-change:transform}
+.sun::after{content:"";position:absolute;inset:-75%;border-radius:50%;background:radial-gradient(circle,currentColor 0%,transparent 62%);opacity:.4;z-index:-1}
+.seq-label{position:absolute;top:84px;left:var(--pad);right:var(--pad);z-index:5;display:flex;justify-content:space-between;gap:20px}
+.seq-inner{position:absolute;inset:0;padding:132px var(--pad) 30px;display:grid;grid-template-columns:repeat(12,1fr);column-gap:24px;z-index:2}
+.seq-copy{grid-column:1 / span 5;grid-row:1;align-self:start;display:grid}
+.ch{grid-area:1/1;visibility:hidden;opacity:0}
+.ch.on{visibility:visible;opacity:1}
+.ch-room{display:flex;gap:16px;align-items:center}
+.ch-room span{opacity:.75}
+.ch-title{font-family:var(--serif);font-weight:300;font-size:clamp(38px,5vw,88px);line-height:.96;letter-spacing:-.04em;margin:18px 0 22px;font-variation-settings:"SOFT" 100,"WONK" 0}
+.ch-text{font-size:clamp(14px,1.05vw,16.5px);line-height:1.72;max-width:46ch;opacity:.88}
+.seq-media{grid-column:7 / span 6;grid-row:1;position:relative}
+.m-main{position:absolute;right:4%;top:50%;height:min(68vh,720px);aspect-ratio:3/4;transform:translateY(-50%);border-radius:999px 999px 0 0;overflow:hidden;background:rgba(0,0,0,.12);z-index:3}
+.m-sec{position:absolute;left:-2%;bottom:5%;width:min(17vw,250px);aspect-ratio:1;border-radius:50%;overflow:hidden;z-index:4;box-shadow:0 30px 60px rgba(0,0,0,.28);background:rgba(0,0,0,.12)}
+.mi{position:absolute;inset:0;overflow:hidden;visibility:hidden}
+.mi:first-child{visibility:visible}
+.mi img{width:100%;height:100%;object-fit:cover}
+.seq-clock{position:absolute;left:var(--pad);bottom:12px;z-index:1;pointer-events:none}
+.seq-clock .eyebrow{display:block;margin-bottom:10px;opacity:.8}
+.seq-clock .t{font-family:var(--serif);font-size:clamp(80px,min(15vw,24vh),260px);font-weight:200;line-height:.8;letter-spacing:-.05em;display:block;font-variant-numeric:tabular-nums}
+.seq-rail{position:absolute;right:var(--pad);bottom:24px;width:min(46vw,560px);z-index:6;display:flex;gap:10px}
+.tick{flex:1;text-align:left;padding:8px 0 0;position:relative;opacity:.55;cursor:pointer;transition:opacity .5s}
+.tick.on{opacity:1}
+.tick .tm{font-size:10px;letter-spacing:.16em;display:block;margin-top:9px}
+.tick .bar{display:block;height:2px;position:relative}
+.tick .bar::before{content:"";position:absolute;inset:0;background:currentColor;opacity:.22}
+.tick .bar i{position:absolute;inset:0;background:currentColor;transform-origin:left;transform:scaleX(0)}
+.tick:hover{opacity:1}
+@media(max-width:900px){
+  .seq-inner{display:block;padding:0}
+  .seq-media{position:absolute;left:0;right:0;top:112px;height:40vh}
+  .m-main{right:50%;transform:translate(50%,0);top:0;height:100%}
+  .m-sec{display:none}
+  .seq-copy{position:absolute;left:var(--pad);right:var(--pad);top:calc(112px + 40vh + 18px)}
+  .ch-title{font-size:clamp(32px,9vw,52px);margin:10px 0 12px}
+  .ch-text{font-size:14px;line-height:1.6}
+  .seq-clock{left:auto;right:var(--pad);bottom:auto;top:86px;text-align:right;z-index:7}
+  .seq-clock .eyebrow{display:none}
+  .seq-clock .t{font-size:42px}
+  .seq-label span:last-child{display:none}
+  .seq-rail{left:var(--pad);right:var(--pad);width:auto;bottom:14px}
+}
+
+/* ============ frames ============ */
+.frames{background:var(--walnut);color:var(--paper);padding:clamp(80px,14vh,170px) 0 calc(clamp(80px,14vh,160px) + 8vw);overflow:hidden}
+.fr-head{padding:0 var(--pad);display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;margin-bottom:clamp(40px,7vh,84px)}
+.fr-head h2{font-family:var(--serif);font-weight:300;font-size:clamp(52px,9vw,168px);line-height:.88;letter-spacing:-.05em}
+.fr-head h2 em.i{color:var(--sun)}
+.fact{display:grid;grid-template-columns:auto 1fr;gap:10px 22px;font-size:13.5px;max-width:420px;border-top:1px solid rgba(246,242,234,.18);padding-top:18px}
+.fact dt{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);padding-top:3px}
+.fact dd{color:rgba(246,242,234,.92)}
+.fr-rows{display:flex;flex-direction:column;gap:clamp(14px,1.6vw,26px)}
+.fr-row{display:flex;gap:clamp(14px,1.6vw,26px);width:max-content;padding:0 var(--pad);will-change:transform}
+.fr-row.a{--fh:clamp(200px,36vh,380px)}
+.fr-row.b{--fh:clamp(240px,46vh,480px)}
+.fr{height:var(--fh);aspect-ratio:3/2;flex:none;position:relative;overflow:hidden;background:#2b211b;border-radius:6px;cursor:pointer}
+.fr.p{aspect-ratio:2/3;border-radius:999px 999px 6px 6px}
+.fr img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--out)}
+.fr:hover img{transform:scale(1.07)}
+.fr figcaption{position:absolute;left:18px;bottom:16px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;display:flex;gap:12px;opacity:0;transform:translateY(10px);transition:opacity .5s,transform .7s var(--out);text-shadow:0 1px 14px rgba(0,0,0,.6)}
+.fr:hover figcaption{opacity:1;transform:none}
+@media (hover:none),(pointer:coarse){.fr figcaption{opacity:.85;transform:none}}
+
+/* ============ lightbox ============ */
+.lb{position:fixed;inset:0;z-index:9000;background:rgba(18,13,10,.97);display:none;flex-direction:column;color:var(--paper)}
+.lb.open{display:flex}
+.lb-close{position:absolute;top:22px;right:var(--pad);font-size:11px;letter-spacing:.22em;text-transform:uppercase;z-index:2;padding:8px 0;cursor:pointer}
+.lb-stage{flex:1;display:grid;place-items:center;padding:70px var(--pad) 10px;min-height:0}
+.lb-stage img{max-height:100%;max-width:100%;object-fit:contain}
+.lb-bar{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:16px var(--pad) 24px;font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+.lb-bar button{border:1px solid rgba(246,242,234,.4);border-radius:99px;padding:10px 22px;letter-spacing:.2em;font-size:11px;text-transform:uppercase;cursor:pointer;transition:background .4s,color .4s}
+.lb-bar button:hover{background:var(--paper);color:var(--walnut)}
+
+/* ============ how we work ============ */
+.how{background:var(--paper);position:relative;z-index:2;margin-top:-8vw;border-radius:50vw 50vw 0 0 / 11vw 11vw 0 0;padding:clamp(110px,18vh,220px) var(--pad) clamp(80px,13vh,150px)}
+.how-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap}
+.how-head h2{font-family:var(--serif);font-weight:300;font-size:clamp(46px,8vw,150px);line-height:.9;letter-spacing:-.05em}
+.how-head h2 em.i{color:var(--brick)}
+.how-head p{max-width:360px;font-size:15px;line-height:1.7;color:rgba(28,21,17,.74)}
+.how-path{position:relative;height:clamp(110px,17vw,240px);margin:clamp(40px,7vh,80px) 0 0;color:var(--walnut)}
+.how-path svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.sunDot{position:absolute;left:0;top:0;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:var(--sun);box-shadow:0 0 0 9px rgba(244,179,63,.22),0 0 60px 12px rgba(244,179,63,.5);will-change:transform}
+.how-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(18px,2.4vw,40px);margin-top:10px}
+.hstep{border-top:1px solid rgba(28,21,17,.2);padding-top:22px;opacity:.35;transition:opacity .8s,transform .9s var(--out);transform:translateY(14px)}
+.hstep.on{opacity:1;transform:none}
+.hstep .n{font-size:11px;letter-spacing:.2em;color:var(--brick)}
+.hstep h3{font-family:var(--serif);font-weight:300;font-size:clamp(40px,5.2vw,92px);line-height:.95;letter-spacing:-.045em;margin:10px 0 14px}
+.hstep p{font-size:14.5px;line-height:1.7;max-width:30ch;color:rgba(28,21,17,.78)}
+@media(max-width:860px){.how-steps{grid-template-columns:1fr 1fr;row-gap:36px}}
+@media(max-width:520px){.how-steps{grid-template-columns:1fr}}
+
+/* ============ marquee ============ */
+.marq{background:var(--brick);color:var(--paper);overflow:hidden;padding:clamp(26px,4vw,56px) 0;display:flex;flex-direction:column;gap:6px;position:relative;z-index:2;user-select:none}
+.marq:hover .marq-track{animation-play-state:paused}
+.marq-row{overflow:hidden;will-change:transform}
+.marq-track{display:flex;width:max-content;animation:mq 42s linear infinite}
+.marq-row.r .marq-track{animation-direction:reverse;animation-duration:52s}
+.marq-row.o .marq-track span{color:transparent;-webkit-text-stroke:1px rgba(246,242,234,.7)}
+.marq-track span{font-family:var(--serif);font-weight:300;font-size:clamp(54px,9.4vw,170px);line-height:1.02;letter-spacing:-.045em;white-space:nowrap;padding-right:.35em;display:flex;align-items:center;gap:.35em}
+.marq-track span i{font-style:normal;font-size:.5em;color:var(--sun);-webkit-text-stroke:0}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ============ contact ============ */
+.contact{background:var(--walnut);color:var(--paper);position:relative;overflow:hidden;padding:clamp(100px,17vh,200px) var(--pad) clamp(70px,10vh,120px)}
+.contact::before{content:"";position:absolute;right:-18vw;bottom:-26vw;width:70vw;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(244,179,63,.4),rgba(176,74,42,.22) 40%,transparent 68%);pointer-events:none}
+.contact h2{position:relative;font-family:var(--serif);font-weight:300;font-size:clamp(50px,9.4vw,180px);line-height:.88;letter-spacing:-.05em;max-width:12em}
+.contact h2 em.i{color:var(--sun)}
+.c-grid{position:relative;display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(36px,6vw,110px);margin-top:clamp(50px,9vh,110px)}
+@media(max-width:900px){.c-grid{grid-template-columns:1fr}}
+.c-list{border-top:1px solid rgba(246,242,234,.2)}
+.c-row{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:18px 0;border-bottom:1px solid rgba(246,242,234,.2);font-size:15px}
+.c-row .eyebrow{color:var(--ash);padding-top:3px}
+.c-row a{border-bottom:1px solid transparent;transition:border-color .4s,color .4s}
+.c-row a:hover{color:var(--sun);border-color:var(--sun)}
+.c-note{margin-top:22px;font-size:13px;line-height:1.7;color:rgba(246,242,234,.6);max-width:42ch}
+.inquiry{position:relative;display:inline-flex;align-items:center;gap:18px;background:var(--sun);color:var(--walnut);border-radius:99px;padding:16px 20px 16px 30px;font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;margin-top:30px;overflow:hidden;cursor:pointer;box-shadow:0 12px 30px rgba(244,179,63,.26);transition:transform .5s var(--ease),box-shadow .5s var(--ease),background .4s}
+.inquiry:hover{transform:translateY(-2px);background:#FFBF4D;box-shadow:0 18px 42px rgba(244,179,63,.38)}
+.inquiry:active{transform:translateY(1px) scale(.98)}
+.inquiry:focus-visible{outline-color:var(--paper)}
+.inquiry .disc{width:32px;height:32px;border-radius:50%;background:var(--walnut);color:var(--paper);display:grid;place-items:center;transition:transform .5s var(--ease),background .4s}
+.inquiry:hover .disc{transform:translateX(3px);background:var(--brick)}
+.inquiry .shine{position:absolute;inset:0;background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,.55) 50%,transparent 80%);transform:translateX(-100%);transition:transform .75s var(--ease)}
+.inquiry:hover .shine{transform:translateX(100%)}
+
+/* ============ footer ============ */
+.foot{background:var(--walnut);color:var(--paper);position:relative;overflow:hidden}
+.lattice{height:56px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath fill='%23B04A2A' fill-rule='evenodd' d='M0 0h56v56H0z M28 8l20 20-20 20-20-20z M0 -10l10 10-10 10-10-10z M56 -10l10 10-10 10-10-10z M0 46l10 10-10 10-10-10z M56 46l10 10-10 10-10-10z'/%3E%3C/svg%3E");background-size:56px 56px;background-repeat:repeat-x}
+.foot-in{padding:clamp(40px,7vh,80px) var(--pad) 28px}
+.foot-word{font-family:var(--serif);font-weight:300;font-size:clamp(70px,19.4vw,340px);line-height:.8;letter-spacing:-.06em;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(246,242,234,.34);user-select:none;padding-bottom:.08em}
+.foot-word span{display:inline-block;transition:color .4s,-webkit-text-stroke-color .4s}
+.foot-word span:hover{color:var(--sun);-webkit-text-stroke-color:var(--sun)}
+.foot-row{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;border-top:1px solid rgba(246,242,234,.16);padding-top:22px;margin-top:clamp(24px,4vh,46px);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,242,234,.72)}
+.foot-row a,.foot-row button{cursor:pointer;transition:color .3s}
+.foot-row a:hover,.foot-row button:hover{color:var(--sun)}
+.foot-row .yn{display:flex;align-items:center;gap:8px}
+.eq{display:inline-flex;gap:2.5px;align-items:flex-end;height:12px}
+.eq i{width:2.5px;height:12px;background:var(--sun);transform-origin:bottom;transform:scaleY(.15);opacity:0}
+.yn.on .eq i{opacity:1;animation:eq .9s ease-in-out infinite}
+.yn.on .eq i:nth-child(2){animation-delay:.15s}
+.yn.on .eq i:nth-child(3){animation-delay:.3s}
+@keyframes eq{0%,100%{transform:scaleY(.2)}50%{transform:scaleY(1)}}
+.music-btn{display:inline-flex;align-items:center;gap:10px}
+.music-btn .eq i{transition:opacity .3s}
+@media(prefers-reduced-motion:reduce){.eq i{animation:none!important}}
+
+@media (prefers-reduced-motion:reduce){
+  .jaali,.marq-track{animation:none!important}
+}
+</style>
 </head>
 <body>
-    <!-- Preloader -->
-    <div class="preloader">
-        <div class="preloader-content">
-            <h1 class="preloader-title">PG DESIGN</h1>
-            <div class="loading-bar-container">
-                <div class="loading-bar"></div>
-            </div>
-            <div class="loading-percentage">0%</div>
-        </div>
+
+<div class="grain" aria-hidden="true" style="display:none"></div>
+
+<!-- LOADER -->
+<div class="loader" id="loader" aria-hidden="true">
+    <div class="ld-top"><span>PG Design</span><span>Interior Design Studio</span></div>
+    <div class="ld-scene"><div class="ld-sun"></div></div>
+    <div class="ld-bot">
+      <span class="ld-clock" id="ldClock">05:42</span>
+      <span class="ld-line">You dream, we capture.</span>
+      <span class="eyebrow" id="ldPct">000</span>
     </div>
+  </div>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-brand">PG Design</div>
-        <div class="nav-menu-btn magnetic-element">
-            <div class="line"></div>
-            <div class="line"></div>
+<!-- NAV -->
+<header class="nav">
+  <a href="#top" class="logo" data-link aria-label="PG Design home">
+    <svg viewBox="0 0 32 36" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 34V15a13 13 0 0 1 26 0v19z"/><circle cx="16" cy="21" r="5.5" fill="currentColor" stroke="none"/></svg>
+    <span>PG <i>Design</i></span>
+  </a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#studio" data-link>Studio</a>
+    <a href="#day" data-link>A Day</a>
+    <a href="#frames" data-link>Frames</a>
+    <a href="#approach" data-link>Approach</a>
+  </nav>
+  <div class="nav-r">
+    <a href="#contact" class="nav-cta" data-link>Start a project</a>
+    <button class="yn music-btn" id="musicBtn" aria-pressed="false" aria-label="Play ambient music" title="Ambient music">
+      <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span>Music</span>
+    </button>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"></button>
+  </div>
+</header>
+<nav class="menu" id="menu" aria-label="Mobile navigation">
+  <a href="#studio"><span>Studio</span></a>
+  <a href="#day"><span>A Day</span></a>
+  <a href="#frames"><span>Frames</span></a>
+  <a href="#approach"><span>Approach</span></a>
+  <a href="#contact"><span>Contact</span></a>
+</nav>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-slides" aria-hidden="true">
+    <div class="hslide on"><img src="https://lh3.googleusercontent.com/grass-cs/ACvplmPbC0pQln7MNS7LxMQjFS6aE7SxEyKLDMuiSl5TVoyk3gzJaTRCehGCwv7W6mBt6pw7L18kDglmI08R6Pr7t5kBJYLTeNyxI5--NvsuD0-VlTVAUI164ILa7bFhwkkx9s9T4E-v=w1500-h901-k-no" alt=""></div>
+    <div class="hslide"><img src="https://lh3.googleusercontent.com/grass-cs/ACvplmO25DTmhz75U6KwWzPoHq2yZqy8msc3YrHtaWTEwmbke4i4MaoeucblQwlcBhLo-yl2NlDODDKRAMi-puhXT8vmjd31KLQ3p9V170-m8DhXU6hn957jm0RAUHS7Z-gdJapaFDsf=w1024-h673-k-no" alt="" loading="lazy"></div>
+    <div class="hslide"><img src="https://lh3.googleusercontent.com/grass-cs/ACvplmNSjOSXTp04z3oNhrrNRGc1ue9P-Cw9YH8d1-yKw3cxncNsf2IhA_h2Bz27T1kzC40A4P5ySgIXi1p-uDsp1YvqfAJK5tWoz4BWTi5INIFIFvPa9ezviCj3oi-xIsqhZaI0FrB_=w1920-h1080-k-no" alt="" loading="lazy"></div>
+  </div>
+  <div class="hshade"></div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hdots" id="hdots" aria-hidden="true">
+    <button class="hdot on" data-h="0" aria-label="Photo 1"></button>
+    <button class="hdot" data-h="1" aria-label="Photo 2"></button>
+    <button class="hdot" data-h="2" aria-label="Photo 3"></button>
+  </div>
+  <div class="hero-head">
+    <div class="hero-kicker">Interior Design Studio</div>
+    <h1 class="hero-title2" id="heroTitle"><span class="ln"><span class="rise">You dream,</span></span><span class="ln"><span class="rise">we <em class="i">capture.</em></span></span></h1>
+    <div class="hero-sub">
+      <p>Creating spaces for better living. Let us bring your ideas <em class="i">to life!</em></p>
+      <a href="#contact" class="hero-pill" data-link>Start a project <span>↘</span></a>
+    </div>
+  </div>
+  <div class="hero-scroll2" data-link-scroll>Scroll</div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="manifesto" id="studio">
+  <div class="eyebrow">(01) The studio</div>
+  <p class="m-text" id="mText">Formed by a love of <em class="i">history</em> <span class="chip"><img src="https://lh3.googleusercontent.com/grass-cs/ACvplmO25DTmhz75U6KwWzPoHq2yZqy8msc3YrHtaWTEwmbke4i4MaoeucblQwlcBhLo-yl2NlDODDKRAMi-puhXT8vmjd31KLQ3p9V170-m8DhXU6hn957jm0RAUHS7Z-gdJapaFDsf=w1024-h673-k-no" alt="" referrerpolicy="no-referrer" loading="lazy"></span>, we keep as much of the <em class="i">bones</em> of a structure as we can — then marry in your <em class="i">personality</em> <span class="chip"><img src="https://lh3.googleusercontent.com/grass-cs/ACvplmPbC0pQln7MNS7LxMQjFS6aE7SxEyKLDMuiSl5TVoyk3gzJaTRCehGCwv7W6mBt6pw7L18kDglmI08R6Pr7t5kBJYLTeNyxI5--NvsuD0-VlTVAUI164ILa7bFhwkkx9s9T4E-v=w1500-h901-k-no" alt="" referrerpolicy="no-referrer" loading="lazy"></span> because that is what really brings a <em class="i">home</em> together<span class="chip arch"><img src="https://lh3.googleusercontent.com/grass-cs/ACvplmNSjOSXTp04z3oNhrrNRGc1ue9P-Cw9YH8d1-yKw3cxncNsf2IhA_h2Bz27T1kzC40A4P5ySgIXi1p-uDsp1YvqfAJK5tWoz4BWTi5INIFIFvPa9ezviCj3oi-xIsqhZaI0FrB_=w1920-h1080-k-no" alt="" referrerpolicy="no-referrer" loading="lazy"></span>.</p>
+  <div class="m-foot">
+    <p>PG Design is an interior design studio creating spaces for better living — homes that keep the character of what was there, and take on the personality of who lives there.</p>
+  </div>
+</section>
+
+<!-- PANELS -->
+<section class="panels">
+  <div class="panels-head">
+    <h2 data-split>Style, approach <em class="i">&amp; network.</em></h2>
+    <div class="eyebrow">(02) What we hold dear</div>
+  </div>
+  <div class="panel-row" id="panelRow">
+    <article class="panel on" tabindex="0">
+      <img src="https://lh3.googleusercontent.com/grass-cs/ACvplmPbC0pQln7MNS7LxMQjFS6aE7SxEyKLDMuiSl5TVoyk3gzJaTRCehGCwv7W6mBt6pw7L18kDglmI08R6Pr7t5kBJYLTeNyxI5--NvsuD0-VlTVAUI164ILa7bFhwkkx9s9T4E-v=w1500-h901-k-no" alt="PG Design Interior Studio" referrerpolicy="no-referrer" loading="lazy">
+      <div class="p-shade"></div>
+      <div class="p-col"><span class="eyebrow">01</span><span class="p-vert">Our Style</span></div>
+      <div class="p-body"><span class="eyebrow">01</span><h3>Our Style</h3><p>Formed by a love of history, we love keeping as much of the bones of a structure as we can. Marrying in your personality is what really brings a home together!</p></div>
+    </article>
+    <article class="panel" tabindex="0">
+      <img src="https://lh3.googleusercontent.com/grass-cs/ACvplmO25DTmhz75U6KwWzPoHq2yZqy8msc3YrHtaWTEwmbke4i4MaoeucblQwlcBhLo-yl2NlDODDKRAMi-puhXT8vmjd31KLQ3p9V170-m8DhXU6hn957jm0RAUHS7Z-gdJapaFDsf=w1024-h673-k-no" alt="PG Design Interior Studio" referrerpolicy="no-referrer" loading="lazy">
+      <div class="p-shade"></div>
+      <div class="p-col"><span class="eyebrow">02</span><span class="p-vert">Our Approach</span></div>
+      <div class="p-body"><span class="eyebrow">02</span><h3>Our Approach</h3><p>Communication is key. We're here for whatever you need. We'll help you solidify your vision and keep in constant contact until your dream is realized!</p></div>
+    </article>
+    <article class="panel" tabindex="0">
+      <img src="https://lh3.googleusercontent.com/grass-cs/ACvplmNSjOSXTp04z3oNhrrNRGc1ue9P-Cw9YH8d1-yKw3cxncNsf2IhA_h2Bz27T1kzC40A4P5ySgIXi1p-uDsp1YvqfAJK5tWoz4BWTi5INIFIFvPa9ezviCj3oi-xIsqhZaI0FrB_=w1920-h1080-k-no" alt="PG Design Interior Studio" referrerpolicy="no-referrer" loading="lazy">
+      <div class="p-shade"></div>
+      <div class="p-col"><span class="eyebrow">03</span><span class="p-vert">Our Network</span></div>
+      <div class="p-body"><span class="eyebrow">03</span><h3>Our Network</h3><p>The craftspeople, artisans and suppliers we trust — gathered around your project so that it is built exactly the way it was dreamed.</p></div>
+    </article>
+  </div>
+</section>
+
+<!-- A DAY IN THE HOUSE -->
+<section class="seq" id="day">
+  <div class="seq-track" id="seqTrack">
+    <div class="seq-stage" id="seqStage">
+      <div class="sun" id="sun" aria-hidden="true"></div>
+      <div class="seq-label eyebrow"><span>Spaces for better living</span><span id="seqCount">01 / 03</span></div>
+      <div class="seq-inner">
+        <div class="seq-copy" id="seqCopy"></div>
+        <div class="seq-media">
+          <div class="m-main" id="mMain"></div>
+          <div class="m-sec" id="mSec"></div>
         </div>
-        <div class="nav-overlay">
-            <ul class="nav-links">
-                <li><a href="#home" class="nav-link" data-text="Home">Home</a></li>
-                <li><a href="#about" class="nav-link" data-text="About">About</a></li>
-                <li><a href="#services" class="nav-link" data-text="Services">Services</a></li>
-                <li><a href="#portfolio" class="nav-link" data-text="Portfolio">Portfolio</a></li>
-                <li><a href="#contact" class="nav-link" data-text="Contact">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
+      </div>
+      <div class="seq-clock"><span class="eyebrow" id="seqPeriod">Morning</span><span class="t" id="seqClock">08:00</span></div>
+      <div class="seq-rail" id="seqRail"></div>
+    </div>
+  </div>
+</section>
 
-    <main id="smooth-wrapper">
-        <div id="smooth-content">
-            <!-- Hero Section -->
-            <section id="home" class="hero">
-                <div class="hero-bg">
-                    <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Luxury Interior" class="parallax-img">
-                    <div class="overlay"></div>
-                </div>
-                <div class="hero-content">
-                    <p class="hero-subtitle reveal-text">Interior Studio</p>
-                    <h1 class="hero-title">
-                        <span class="line-wrapper"><span class="line-text">Creating</span></span>
-                        <span class="line-wrapper"><span class="line-text">Spaces For</span></span>
-                        <span class="line-wrapper"><span class="line-text italic-text">Better Living</span></span>
-                    </h1>
-                    <div class="hero-scroll magnetic-element">
-                        <p>Scroll to explore</p>
-                        <div class="scroll-indicator"></div>
-                    </div>
-                </div>
-            </section>
+<!-- FRAMES -->
+<section class="frames" id="frames">
+  <div class="fr-head">
+    <h2 data-split>Frames <em class="i">of light.</em></h2>
+    <dl class="fact">
+      <dt>Studio</dt><dd>PG Design Interior Studio</dd>
+      <dt>Location</dt><dd>BK Tower, SH40, Thodupuzha</dd>
+      <dt>Discipline</dt><dd>Interior Design</dd>
+      <dt>Imagery</dt><dd>Google Business Profile</dd>
+    </dl>
+  </div>
+  <div class="fr-rows" id="frRows">
+    <div class="fr-row a" id="rowA"></div>
+    <div class="fr-row b" id="rowB"></div>
+  </div>
+</section>
 
-            <!-- About Section -->
-            <section id="about" class="about section-padding">
-                <div class="container">
-                    <div class="about-grid">
-                        <div class="about-text-col fade-up">
-                            <p class="section-subtitle">01 — Our Approach</p>
-                            <h2 class="section-title">You Dream,<br><span class="italic-text">We Capture</span></h2>
-                            <p class="about-desc">Let us bring your ideas to life! Formed by a love of history, we love keeping as much of the bones of a structure as we can. Marrying in your personality is what really brings a home together!</p>
-                            <p class="about-desc">Communication is key. We're here for whatever you need. We'll help you solidify your vision and keep in constant contact until your dream is realized.</p>
-                            <a href="#contact" class="btn magnetic-element">Book Now</a>
-                        </div>
-                        <div class="about-img-col">
-                            <div class="img-wrapper reveal-img">
-                                <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Interior Detail" class="parallax-img" data-speed="0.2" loading="lazy">
-                            </div>
-                            <div class="experience-badge fade-up" data-delay="0.3">
-                                <span class="years">10+</span>
-                                <span class="text">Years of<br>Excellence</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+<!-- APPROACH -->
+<section class="how" id="approach">
+  <div class="how-head">
+    <h2 data-split>From dream <em class="i">to lived-in.</em></h2>
+    <p>You dream, we capture. Four quiet steps, with the sun never far from the plan.</p>
+  </div>
+  <div class="how-path" id="howPath">
+    <svg viewBox="0 0 1000 220" preserveAspectRatio="none" aria-hidden="true">
+      <path id="sunPathBase" d="M0 205 C 170 205, 260 18, 500 18 S 830 205, 1000 205" fill="none" stroke="currentColor" stroke-opacity=".22" stroke-width="1.5"/>
+      <path id="sunPath" pathLength="1" d="M0 205 C 170 205, 260 18, 500 18 S 830 205, 1000 205" fill="none" stroke="#B04A2A" stroke-width="2" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg>
+    <div class="sunDot" id="sunDot"></div>
+  </div>
+  <div class="how-steps">
+    <article class="hstep"><span class="n">01</span><h3>Dream</h3><p>You tell us how you live and what you love — the corners you want to keep, and the things you can't imagine leaving behind.</p></article>
+    <article class="hstep"><span class="n">02</span><h3>Capture</h3><p>We solidify your vision — layout, light, material and mood — and stay in constant contact while it takes shape.</p></article>
+    <article class="hstep"><span class="n">03</span><h3>Build</h3><p>We keep as much of the bones as we can, then marry in your personality, one considered detail at a time.</p></article>
+    <article class="hstep"><span class="n">04</span><h3>Live</h3><p>Until your dream is realized — and the house simply feels like a space for better living.</p></article>
+  </div>
+</section>
 
-            <!-- Services Section -->
-            <section id="services" class="services section-padding dark-section">
-                <div class="container">
-                    <div class="section-header fade-up">
-                        <p class="section-subtitle">02 — Expertise</p>
-                        <h2 class="section-title">Our <span class="italic-text">Services</span></h2>
-                    </div>
-                    
-                    <div class="services-list">
-                        <div class="service-item fade-up hover-target" data-delay="0.1">
-                            <div class="service-num">01</div>
-                            <div class="service-title-wrap">
-                                <h3 class="service-title">Residential Design</h3>
-                                <p class="service-desc">Crafting beautiful, functional living spaces that reflect your personal style and enhance your daily life.</p>
-                            </div>
-                            <div class="service-img">
-                                <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Residential" loading="lazy">
-                            </div>
-                            <div class="service-arrow">↗</div>
-                        </div>
-                        <div class="service-item fade-up hover-target" data-delay="0.2">
-                            <div class="service-num">02</div>
-                            <div class="service-title-wrap">
-                                <h3 class="service-title">Commercial Spaces</h3>
-                                <p class="service-desc">Designing inspiring workspaces and retail environments that elevate your brand and engage customers.</p>
-                            </div>
-                            <div class="service-img">
-                                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Commercial" loading="lazy">
-                            </div>
-                            <div class="service-arrow">↗</div>
-                        </div>
-                        <div class="service-item fade-up hover-target" data-delay="0.3">
-                            <div class="service-num">03</div>
-                            <div class="service-title-wrap">
-                                <h3 class="service-title">Renovation</h3>
-                                <p class="service-desc">Transforming existing structures with a deep respect for history, preserving the bones while modernizing the feel.</p>
-                            </div>
-                            <div class="service-img">
-                                <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Renovation" loading="lazy">
-                            </div>
-                            <div class="service-arrow">↗</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+<!-- MARQUEE -->
+<section class="marq" aria-hidden="true">
+  <div class="marq-row"><div class="marq-track" id="mq1"></div></div>
+  <div class="marq-row o r"><div class="marq-track" id="mq2"></div></div>
+</section>
 
-            <!-- Portfolio Section -->
-            <section id="portfolio" class="portfolio section-padding">
-                <div class="container">
-                    <div class="section-header fade-up">
-                        <p class="section-subtitle">03 — Featured Works</p>
-                        <h2 class="section-title">Selected <span class="italic-text">Projects</span></h2>
-                    </div>
-                    
-                    <div class="portfolio-grid">
-                        <div class="portfolio-item fade-up hover-target">
-                            <div class="portfolio-img-wrap reveal-img">
-                                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Modern Villa" class="parallax-img" data-speed="0.1" loading="lazy">
-                            </div>
-                            <div class="portfolio-info">
-                                <h3 class="portfolio-title">The Minimalist Haven</h3>
-                                <p class="portfolio-category">Residential</p>
-                            </div>
-                        </div>
-                        <div class="portfolio-item mt-large fade-up hover-target" data-delay="0.2">
-                            <div class="portfolio-img-wrap reveal-img">
-                                <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Urban Apartment" class="parallax-img" data-speed="0.15" loading="lazy">
-                            </div>
-                            <div class="portfolio-info">
-                                <h3 class="portfolio-title">Urban Oasis</h3>
-                                <p class="portfolio-category">Renovation</p>
-                            </div>
-                        </div>
-                        <div class="portfolio-item fade-up hover-target">
-                            <div class="portfolio-img-wrap reveal-img">
-                                <img src="https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Office Space" class="parallax-img" data-speed="0.1" loading="lazy">
-                            </div>
-                            <div class="portfolio-info">
-                                <h3 class="portfolio-title">Creative Studio</h3>
-                                <p class="portfolio-category">Commercial</p>
-                            </div>
-                        </div>
-                        <div class="portfolio-item mt-large fade-up hover-target" data-delay="0.2">
-                            <div class="portfolio-img-wrap reveal-img">
-                                <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Luxury Bathroom" class="parallax-img" data-speed="0.15" loading="lazy">
-                            </div>
-                            <div class="portfolio-info">
-                                <h3 class="portfolio-title">Heritage Revival</h3>
-                                <p class="portfolio-category">Residential</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="eyebrow" style="margin-bottom:34px;color:var(--ash)">(05) Contact</div>
+  <h2 data-split>Let us bring your ideas <em class="i">to life!</em></h2>
+  <div class="c-grid">
+    <div>
+      <div class="c-list" id="cList"></div>
+      <p class="c-note">Tell us about the space, the people who'll live in it and the things you love. We'll take it from there — and keep in constant contact.</p>
+    </div>
+    <div>
+      <p style="font-family:var(--serif);font-size:clamp(24px,3vw,42px);line-height:1.15;letter-spacing:-.03em;max-width:16em">A thoughtful space starts with a conversation.</p>
+      <button class="inquiry" id="inquiryBtn" type="button">
+        <span class="shine"></span>
+        <span>Send Inquiry</span>
+        <span class="disc" aria-hidden="true">→</span>
+      </button>
+    </div>
+  </div>
+</section>
 
-            <!-- Marquee Section -->
-            <div class="marquee-section dark-section">
-                <div class="marquee">
-                    <div class="marquee-inner">
-                        <span>PG DESIGN INTERIOR STUDIO</span>
-                        <span class="star">✧</span>
-                        <span>CREATING SPACES FOR BETTER LIVING</span>
-                        <span class="star">✧</span>
-                        <span>PG DESIGN INTERIOR STUDIO</span>
-                        <span class="star">✧</span>
-                        <span>CREATING SPACES FOR BETTER LIVING</span>
-                        <span class="star">✧</span>
-                    </div>
-                </div>
-            </div>
+</main>
 
-            <!-- Contact Section -->
-            <section id="contact" class="contact section-padding">
-                <div class="container">
-                    <div class="contact-grid">
-                        <div class="contact-info fade-up">
-                            <h2 class="section-title">Book <br><span class="italic-text">Now</span></h2>
-                            <p class="contact-desc">Ready to start your next project? Fill out the details below and message us directly on WhatsApp to get started instantly.</p>
-                            
-                            <div class="contact-details">
-                                <div class="detail-item">
-                                    <h4>Visit Us</h4>
-                                    <p>Amruth Sai Arcade, 1st Floor,<br>Mini Bypass Rd, P O, Puthiyara,<br>Kozhikode, Kerala 673004, India</p>
-                                </div>
-                                <div class="detail-item">
-                                    <h4>Contact</h4>
-                                    <p><a href="mailto:info@pgdesign.in" class="hover-target">info@pgdesign.in</a></p>
-                                    <p><a href="tel:+919999999999" class="hover-target">+91 99999 99999</a></p>
-                                </div>
-                            </div>
-                            
-                            <div class="social-links">
-                                <a href="#" class="hover-target">Instagram</a>
-                                <a href="#" class="hover-target">Facebook</a>
-                                <a href="#" class="hover-target">LinkedIn</a>
-                            </div>
-                        </div>
-                        <div class="contact-form fade-up" data-delay="0.2">
-                            <!-- WhatsApp Booking Form -->
-                            <form id="whatsappForm">
-                                <div class="form-group">
-                                    <input type="text" id="waName" required placeholder=" ">
-                                    <label for="waName">Your Name</label>
-                                    <div class="line-border"></div>
-                                </div>
-                                <div class="form-group">
-                                    <input type="tel" id="waPhone" required placeholder=" ">
-                                    <label for="waPhone">Phone Number</label>
-                                    <div class="line-border"></div>
-                                </div>
-                                <div class="form-group">
-                                    <select id="waService" required>
-                                        <option value="" disabled selected>Select a Service</option>
-                                        <option value="Residential Design">Residential Design</option>
-                                        <option value="Commercial Spaces">Commercial Spaces</option>
-                                        <option value="Renovation">Renovation</option>
-                                    </select>
-                                    <div class="line-border"></div>
-                                </div>
-                                <div class="form-group">
-                                    <textarea id="waMessage" rows="4" required placeholder=" "></textarea>
-                                    <label for="waMessage">Project Details / Message</label>
-                                    <div class="line-border"></div>
-                                </div>
-                                <button type="submit" class="submit-btn magnetic-element">
-                                    <span>Book via WhatsApp</span>
-                                    <div class="btn-arrow">
-                                        <!-- WhatsApp SVG Icon -->
-                                        <svg xmlns="http://www.w3.org/.svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                                    </div>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </section>
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="lattice" aria-hidden="true"></div>
+  <div class="foot-in">
+    <div class="foot-word" id="footWord" aria-label="PG Design"></div>
+    <div class="foot-row">
+      <span>© <span id="year">2026</span> PGDesign.in</span>
+      <span>Thodupuzha · Kerala</span>
+      <button class="yn" id="musicBtn2" aria-pressed="false" aria-label="Play ambient music" title="Ambient music">
+        <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span class="music-label">Ambient</span>
+      </button>
+      <span>Imagery — Google Business Profile</span>
+      <button id="toTop" data-link>Back to top ↑</button>
+    </div>
+  </div>
+</footer>
 
-            <!-- Footer -->
-            <footer class="footer">
-                <div class="container">
-                    <div class="footer-bottom">
-                        <div class="footer-logo">PG Design</div>
-                        <div class="copyright">
-                            &copy; <span id="year"></span> PGDesign.in - All Rights Reserved.<br>
-                            BK CHAKKARATH SOLUTIONS PRIVATE LIMITED.
-                        </div>
-                        <a href="#home" class="back-to-top magnetic-element">Back to Top ↑</a>
-                    </div>
-                </div>
-            </footer>
-        </div>
-    </main>
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Studio images" aria-hidden="true">
+  <button class="lb-close" id="lbClose">Close ✕</button>
+  <div class="lb-stage"><img id="lbImg" alt=""></div>
+  <div class="lb-bar"><button id="lbPrev" aria-label="Previous image">← Prev</button><span id="lbCap"></span><span id="lbCount"></span><button id="lbNext" aria-label="Next image">Next →</button></div>
+</div>
 
-    <script src="script.js"></script>
+<script>
+(function(){
+'use strict';
+const $=(s,c=document)=>c.querySelector(s), $$=(s,c=document)=>Array.from(c.querySelectorAll(s));
+const pad=n=>String(n).padStart(2,'0');
+const RM=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- images: PG Design Google Business Profile only ---------- */
+const A='https://lh3.googleusercontent.com/grass-cs/ACvplmPbC0pQln7MNS7LxMQjFS6aE7SxEyKLDMuiSl5TVoyk3gzJaTRCehGCwv7W6mBt6pw7L18kDglmI08R6Pr7t5kBJYLTeNyxI5--NvsuD0-VlTVAUI164ILa7bFhwkkx9s9T4E-v=w1500-h901-k-no';
+const B='https://lh3.googleusercontent.com/grass-cs/ACvplmO25DTmhz75U6KwWzPoHq2yZqy8msc3YrHtaWTEwmbke4i4MaoeucblQwlcBhLo-yl2NlDODDKRAMi-puhXT8vmjd31KLQ3p9V170-m8DhXU6hn957jm0RAUHS7Z-gdJapaFDsf=w1024-h673-k-no';
+const C='https://lh3.googleusercontent.com/grass-cs/ACvplmNSjOSXTp04z3oNhrrNRGc1ue9P-Cw9YH8d1-yKw3cxncNsf2IhA_h2Bz27T1kzC40A4P5ySgIXi1p-uDsp1YvqfAJK5tWoz4BWTi5INIFIFvPa9ezviCj3oi-xIsqhZaI0FrB_=w1920-h1080-k-no';
+const IMGS=[A,B,C];
+function mkImg(src,alt,eager){
+  const i=new Image();i.src=src;i.alt=alt||'PG Design Interior Studio';i.decoding='async';i.referrerpolicy='no-referrer';
+  if(!eager)i.loading='lazy';
+  return i;
+}
+
+/* ---------- helpers ---------- */
+function words(node,cls){
+  const frag=document.createDocumentFragment();
+  node.childNodes.forEach(n=>{
+    if(n.nodeType===3){
+      n.textContent.split(/(\s+)/).forEach(tk=>{
+        if(!tk)return;
+        if(/^\s+$/.test(tk)){frag.appendChild(document.createTextNode(' '));return;}
+        if(cls==='fill'){const s=document.createElement('span');s.className='fw';s.textContent=tk;frag.appendChild(s);}
+        else{const m=document.createElement('span');m.className='wmask';const r=document.createElement('span');r.className='rise';r.textContent=tk;m.appendChild(r);frag.appendChild(m);}
+      });
+    }else if(n.nodeType===1){
+      if(n.tagName==='BR'||n.classList.contains('chip'))frag.appendChild(n.cloneNode(true));
+      else{const c=n.cloneNode(false);c.appendChild(words(n,cls));frag.appendChild(c);}
+    }
+  });
+  return frag;
+}
+const fmt=m=>{m=Math.round(m);return pad(Math.floor(m/60)%24)+':'+pad(m%60)};
+
+/* ---------- build: day sequence (3 chapters, one visible at a time) ---------- */
+const chapters=[
+ {min:480,period:'Morning',room:'Light',title:'Light that <em class="i">arrives slowly.</em>',
+  text:'Formed by a love of history, we keep as much of the bones of a structure as we can — so the morning finds the room exactly where it should.',
+  main:A,sec:B,bg:'#EBCDBA',fg:'#2A1A12',ac:'#B04A2A',sun:'#F7A56B'},
+ {min:780,period:'Afternoon',room:'Material',title:'Materials that <em class="i">age well.</em>',
+  text:'Marrying in your personality is what really brings a home together. Warm woods, soft stone and colors chosen to grow kinder with time.',
+  main:C,sec:A,bg:'#F0D6CB',fg:'#2A1A12',ac:'#B04A2A',sun:'#F9C56A'},
+ {min:1170,period:'Evening',room:'Living',title:'Rooms made for <em class="i">living.</em>',
+  text:'Communication is key. We stay in constant contact until your dream is realized — and the house simply feels like a space for better living.',
+  main:B,sec:C,bg:'#4B352A',fg:'#F2E7D5',ac:'#F4B33F',sun:'#E9CFA7'}
+];
+const seqCopy=$('#seqCopy'),mMain=$('#mMain'),mSec=$('#mSec'),seqRail=$('#seqRail');
+const chEls=[],mainEls=[],secEls=[],ticks=[];
+chapters.forEach((c,i)=>{
+  const d=document.createElement('div');d.className='ch'+(i===0?' on':'');
+  d.innerHTML='<div class="mask"><div class="eyebrow ch-room rise"><b class="ac" style="color:'+c.ac+'">'+pad(i+1)+' — '+c.period+'</b><span>'+c.room+'</span></div></div>'+
+              '<h3 class="ch-title serif">'+c.title+'</h3>'+
+              '<div class="mask"><p class="ch-text rise">'+c.text+'</p></div>';
+  seqCopy.appendChild(d);
+  d.replaceChildren(words(d,'rise'));
+  chEls.push(d);
+  const m=document.createElement('div');m.className='mi';m.appendChild(mkImg(c.main,c.room+' — PG Design Interior Studio',true));mMain.appendChild(m);mainEls.push(m);
+  const s=document.createElement('div');s.className='mi';s.appendChild(mkImg(c.sec,c.room+' detail — PG Design Interior Studio',true));mSec.appendChild(s);secEls.push(s);
+  const t=document.createElement('button');t.className='tick'+(i===0?' on':'');t.dataset.i=i;t.setAttribute('aria-label','Go to '+c.period+', '+fmt(c.min));
+  t.innerHTML='<span class="bar"><i></i></span><span class="tm">'+fmt(c.min)+'</span>';seqRail.appendChild(t);ticks.push(t);
+});
+
+/* ---------- build: frames rows ---------- */
+function frame(src,idx,portrait){
+  const f=document.createElement('figure');f.className='fr'+(portrait?' p':' l');f.dataset.cursor='View';f.tabIndex=0;f.setAttribute('role','button');f.setAttribute('aria-label','Open image '+(idx+1));
+  f.appendChild(mkImg(src,'PG Design Interior Studio'));
+  const c=document.createElement('figcaption');c.innerHTML='<span>'+pad(idx+1)+'</span>PG Design';f.appendChild(c);
+  const open=()=>lbOpen(idx);
+  f.addEventListener('click',open);
+  f.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
+  return f;
+}
+const rowA=$('#rowA'),rowB=$('#rowB');
+[0,1,2,0].forEach((n,i)=>rowA.appendChild(frame(IMGS[n],i,false)));
+[1,2,0,1].forEach((n,i)=>rowB.appendChild(frame(IMGS[n],i,true)));
+
+/* ---------- marquees ---------- */
+function fillMq(el,txt){let g='';for(let k=0;k<3;k++)g+='<span>'+txt+'<i>+</i></span>';el.innerHTML=g+g;}
+fillMq($('#mq1'),'You dream, we capture');
+fillMq($('#mq2'),'Creating spaces for better living');
+
+/* ---------- contact list ---------- */
+$('#cList').innerHTML=[
+ ['Phone','<a href="tel:+919544449585" data-link>+91 95444 49585</a>'],
+ ['Website','<a href="https://pgdesign.in" target="_blank" rel="noopener" data-link>pgdesign.in ↗</a>'],
+ ['Studio','<span>BK Tower, SH40<br>Thodupuzha, Kerala 685584</span>'],
+ ['On Google','<a href="https://www.google.com/maps/search/?api=1&query=PG%20Design%20Interior%20Studio%2C%20Thodupuzha&query_place_id=ChIJp-P6gjjFBzsRwtM47F_MWUs" target="_blank" rel="noopener" data-link>Google Business Profile ↗</a>']
+].map(r=>'<div class="c-row"><span class="eyebrow">'+r[0]+'</span><span>'+r[1]+'</span></div>').join('');
+
+/* ---------- footer word + year ---------- */
+const footWord=$('#footWord');
+'PG Design'.split('').forEach(ch=>{const s=document.createElement('span');s.innerHTML=ch===' '?'&nbsp;':ch;footWord.appendChild(s);});
+$('#year').textContent=new Date().getFullYear();
+
+/* ---------- inquiry button ---------- */
+$('#inquiryBtn').addEventListener('click',()=>{
+  window.location.href='tel:+919544449585';
+});
+
+/* ============ GSAP guard ============ */
+const loader=$('#loader');
+if(!window.gsap||!window.ScrollTrigger){
+  loader.remove();
+  $$('.fw').forEach(x=>x.style.opacity=1);
+  $$('.rise').forEach(x=>x.style.transform='none');
+  return;
+}
+gsap.registerPlugin(ScrollTrigger);
+
+/* ============ lenis ============ */
+let lenis=null;
+if(window.Lenis&&!RM){
+  lenis=new Lenis({lerp:.09,smoothWheel:true});
+  lenis.on('scroll',ScrollTrigger.update);
+  gsap.ticker.add(t=>lenis.raf(t*1000));
+  gsap.ticker.lagSmoothing(0);
+  lenis.stop();
+}
+const scrollTo=(t,o)=>{if(lenis)lenis.scrollTo(t,Object.assign({duration:1.8,easing:x=>1-Math.pow(1-x,4)},o||{}));else{const el=typeof t==='string'?$(t):null;if(el)el.scrollIntoView();else window.scrollTo(0,typeof t==='number'?t:0);}};
+
+/* ============ menu + anchors ============ */
+(function(){
+  const b=$('#burger'),m=$('#menu');let open=false;
+  function tog(f){
+    open=typeof f==='boolean'?f:!open;
+    b.classList.toggle('open',open);b.setAttribute('aria-expanded',String(open));
+    if(open){if(lenis)lenis.stop();m.style.visibility='visible';
+      gsap.to(m,{clipPath:'inset(0 0 0% 0)',duration:.9,ease:'expo.inOut'});
+      gsap.fromTo('.menu a span',{yPercent:110},{yPercent:0,duration:1,stagger:.07,ease:'expo.out',delay:.3});
+    }else{if(lenis)lenis.start();
+      gsap.to(m,{clipPath:'inset(0 0 100% 0)',duration:.8,ease:'expo.inOut',onComplete:()=>m.style.visibility='hidden'});
+    }
+  }
+  b.addEventListener('click',()=>tog());
+  $$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+    const id=a.getAttribute('href');if(id==='#'||!$(id))return;
+    e.preventDefault();const go=()=>scrollTo(id);
+    if(open){tog(false);setTimeout(go,650);}else go();
+  }));
+  $('#toTop').addEventListener('click',()=>scrollTo(0,{duration:2.4}));
+})();
+
+/* ============ initial states ============ */
+const heroTitle=$('#heroTitle');
+heroTitle.replaceChildren(words(heroTitle,'rise'));
+gsap.set('#heroTitle .rise',{yPercent:118});
+gsap.set('.hero-kicker, .hero-sub > *',{opacity:0,y:22});
+gsap.set('.nav-links a,.nav-cta,.logo,.burger',{opacity:0,y:-16});
+$$('[data-split]').forEach(el=>{
+  el.replaceChildren(words(el,'rise'));
+  gsap.set($$('.rise',el),{yPercent:118});
+  ScrollTrigger.create({trigger:el,start:'top 88%',once:true,onEnter:()=>gsap.to($$('.rise',el),{yPercent:0,duration:1.4,stagger:.06,ease:'expo.out'})});
+});
+const mText=$('#mText');
+mText.replaceChildren(words(mText,'fill'));
+gsap.set('#mText .fw',{opacity:.13});
+chEls.forEach(c=>gsap.set($$('.rise',c),{yPercent:120}));
+mainEls.forEach((m,i)=>gsap.set(m,{visibility:i===0?'visible':'hidden',zIndex:i===0?2:1}));
+secEls.forEach((m,i)=>gsap.set(m,{visibility:i===0?'visible':'hidden',zIndex:i===0?2:1}));
+
+/* ============ loader + intro ============ */
+function intro(){
+  if(lenis)lenis.start();
+  const t=gsap.timeline({defaults:{ease:'expo.out'}});
+  t.fromTo('.hslide.on img',{scale:1.28},{scale:1,duration:3.2},0)
+   .fromTo('.hdots .hdot',{opacity:0},{opacity:1,duration:.8,stagger:.08},1.2)
+   .to('#heroTitle .rise',{yPercent:0,duration:1.7,stagger:.1},.15)
+   .to('.hero-kicker, .hero-sub > *',{opacity:1,y:0,duration:1.2,stagger:.1,ease:'power3.out'},.7)
+   .fromTo('.hero-scroll2',{opacity:0},{opacity:.75,duration:1},1.4)
+   .to('.nav-links a,.nav-cta,.logo,.burger',{opacity:1,y:0,duration:1,stagger:.07,ease:'power3.out'},.8);
+}
+
+/* ============ hero photo slideshow ============ */
+(function(){
+  const slides=$$('.hslide'),dots=$$('.hdot');
+  let hActive=0;
+  function hSet(i){
+    hActive=(i+slides.length)%slides.length;
+    slides.forEach((s,k)=>{
+      const on=k===hActive;
+      s.classList.toggle('on',on);
+      const im=s.querySelector('img');
+      if(on&&im&&!RM)gsap.fromTo(im,{scale:1.28},{scale:1,duration:6,ease:'power2.out'});
+    });
+    dots.forEach((d,k)=>d.classList.toggle('on',k===hActive));
+  }
+  hSet(0);
+  if(!RM)setInterval(()=>hSet(hActive+1),6200);
+  dots.forEach((d,i)=>{
+    d.style.pointerEvents='auto';
+    d.addEventListener('click',()=>{hSet(i);});
+  });
+})();
+
+/* ============ ambient music (generated, optional) ============ */
+(function(){
+  let ctx=null,master=null,timer=null,playing=false;
+  const btns=[$('#musicBtn'),$('#musicBtn2')].filter(Boolean);
+  function setOn(on){
+    playing=on;
+    btns.forEach(b=>{b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on));});
+    const l=$('.music-label');if(l)l.textContent=on?'Muting':'Ambient';
+  }
+  function note(f,t,dur,type,vol,det){
+    if(!ctx)return;
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.type=type||'triangle';o.frequency.value=f;if(det)o.detune.value=det;
+    g.gain.setValueAtTime(0,t);
+    g.gain.linearRampToValueAtTime(vol,t+.04);
+    g.gain.linearRampToValueAtTime(0,t+dur);
+    o.connect(g);g.connect(master);o.start(t);o.stop(t+dur+.1);
+  }
+  function pad(){
+    if(!ctx)return;
+    const t=ctx.currentTime;
+    const chords=[[110,164.81,220,329.63],[98,146.83,196,293.66],[123.47,185,246.94,369.99],[87.31,130.81,174.61,261.63]];
+    chords.forEach((ch,ci)=>{
+      const st=t+ci*8;
+      ch.forEach((f,i)=>{note(f,st,7.6,'sine',.05,i%2?4:-4);note(f*2,st,7.2,'triangle',.014,i%2?-4:4);});
+    });
+  }
+  function sparkle(){
+    if(!ctx)return;
+    const t=ctx.currentTime;
+    [523.25,587.33,659.25,783.99,880].forEach((f,i)=>{
+      const ft=t+3+i*2.4+Math.random()*.8;
+      if(Math.random()<.5)note(f,ft,2.4,'sine',.05);
+    });
+  }
+  function start(){
+    if(!ctx){ctx=new (window.AudioContext||window.webkitAudioContext)();
+      master=ctx.createGain();master.gain.value=.5;master.connect(ctx.destination);}
+    ctx.resume();
+    pad();sparkle();
+    timer=setInterval(()=>{pad();sparkle();},30000);
+    setOn(true);
+  }
+  function stop(){if(timer)clearInterval(timer);timer=null;if(ctx)ctx.suspend();setOn(false);}
+  btns.forEach(b=>b.addEventListener('click',()=>playing?stop():start()));
+})();
+
+(function(){
+  const clk={m:342},pct={v:0};
+  const tl=gsap.timeline();
+  tl.fromTo('.ld-top > *,.ld-line',{opacity:0,y:12},{opacity:1,y:0,stagger:.1,duration:.8,ease:'power3.out'},0)
+    .fromTo('.ld-sun',{yPercent:102},{yPercent:0,duration:2,ease:'power3.inOut'},.2)
+    .to(clk,{m:360,duration:2,ease:'power3.inOut',onUpdate:()=>{$('#ldClock').textContent=fmt(clk.m);}},.2)
+    .to(pct,{v:100,duration:2,ease:'power3.inOut',onUpdate:()=>{$('#ldPct').textContent=String(Math.round(pct.v)).padStart(3,'0');}},.2)
+    .to('.ld-top,.ld-bot,.ld-scene',{opacity:0,duration:.35},2.35)
+    .to('#loader',{clipPath:'inset(0 0 100% 0)',duration:1.1,ease:'expo.inOut'},2.6)
+    .add(intro,3.15)
+    .set('#loader',{display:'none'});
+  if(RM)tl.progress(1);
+})();
+
+/* ============ hero: scroll cue + parallax ============ */
+(function(){
+  const hero=$('#hero');
+  const cue=$('.hero-scroll2');
+  if(cue)cue.addEventListener('click',()=>scrollTo('#studio',{duration:1.6}));
+  gsap.to('.hero-slides',{yPercent:10,ease:'none',scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}});
+  gsap.to('.hero-head',{yPercent:-16,opacity:0,ease:'none',scrollTrigger:{trigger:'#hero',start:'28% top',end:'bottom top',scrub:true}});
+})();
+
+/* ============ generic scroll effects ============ */
+gsap.to('#mText .fw',{opacity:1,ease:'none',stagger:.14,scrollTrigger:{trigger:'#mText',start:'top 78%',end:'bottom 55%',scrub:true}});
+$$('#mText .chip').forEach(c=>{
+  gsap.fromTo(c,{clipPath:'inset(0% 50% 0% 50% round 99px)'},{clipPath:'inset(0% 0% 0% 0% round 99px)',ease:'none',scrollTrigger:{trigger:c,start:'top 88%',end:'top 52%',scrub:true}});
+});
+gsap.from('.panel',{yPercent:14,opacity:0,duration:1.4,stagger:.14,ease:'expo.out',scrollTrigger:{trigger:'#panelRow',start:'top 82%'}});
+
+/* ============ day sequence ============ */
+(function(){
+  const N=chapters.length,stage=$('#seqStage'),sun=$('#sun'),clockEl=$('#seqClock'),periodEl=$('#seqPeriod'),countEl=$('#seqCount');
+  let active=0,z=10;
+  const clk={m:chapters[0].min};
+  const sx=gsap.quickTo(sun,'x',{duration:1.1,ease:'power3'}),sy=gsap.quickTo(sun,'y',{duration:1.1,ease:'power3'});
+  gsap.set(stage,{backgroundColor:chapters[0].bg,color:chapters[0].fg});
+  gsap.set(sun,{color:chapters[0].sun});
+  gsap.set(mainEls[0],{clipPath:'inset(100% 0% 0% 0%)'});
+  gsap.set(secEls[0],{clipPath:'circle(0% at 50% 50%)'});
+
+  function show(i,dir){
+    const prev=active;active=i;const c=chapters[i];
+    gsap.to(stage,{backgroundColor:c.bg,color:c.fg,duration:1.2,ease:'power2.inOut',overwrite:'auto'});
+    gsap.to(sun,{color:c.sun,duration:1.4,ease:'power2.inOut'});
+    gsap.to(clk,{m:c.min,duration:1.7,ease:'power3.inOut',overwrite:true,onUpdate:()=>{clockEl.textContent=fmt(clk.m);}});
+    periodEl.textContent=c.period;countEl.textContent=pad(i+1)+' / '+pad(N);
+    const fromM=dir>=0?'inset(100% 0% 0% 0%)':'inset(0% 0% 100% 0%)';
+    const nm=mainEls[i];gsap.set(nm,{visibility:'visible',zIndex:++z});
+    gsap.fromTo(nm,{clipPath:fromM},{clipPath:'inset(0% 0% 0% 0%)',duration:1.35,ease:'expo.inOut',overwrite:'auto',onComplete:()=>mainEls.forEach((e,k)=>{if(k!==active)gsap.set(e,{visibility:'hidden'});})});
+    const im=nm.querySelector('img');if(im)gsap.fromTo(im,{scale:1.4},{scale:1,duration:2.2,ease:'expo.out',overwrite:'auto'});
+    const ns=secEls[i];gsap.set(ns,{visibility:'visible',zIndex:++z});
+    gsap.fromTo(ns,{clipPath:'circle(0% at 50% 50%)'},{clipPath:'circle(75% at 50% 50%)',duration:1.2,ease:'expo.inOut',delay:.28,overwrite:'auto',onComplete:()=>secEls.forEach((e,k)=>{if(k!==active)gsap.set(e,{visibility:'hidden'});})});
+    const is=ns.querySelector('img');if(is)gsap.fromTo(is,{scale:1.5},{scale:1,duration:2,ease:'expo.out',delay:.28,overwrite:'auto'});
+    const out=chEls[prev],inn=chEls[i];
+    if(out&&out!==inn){gsap.to($$('.rise',out),{yPercent:-120,duration:.5,ease:'power3.in',stagger:.018,overwrite:'auto',onComplete:()=>out.classList.remove('on')});}
+    inn.classList.add('on');
+    gsap.fromTo($$('.rise',inn),{yPercent:120},{yPercent:0,duration:1.25,ease:'expo.out',stagger:.04,delay:.38,overwrite:'auto'});
+    ticks.forEach((t,k)=>t.classList.toggle('on',k===i));
+  }
+  const st=ScrollTrigger.create({
+    trigger:'#seqTrack',start:'top top',end:'bottom bottom',
+    onUpdate:self=>{
+      const p=self.progress;
+      const i=Math.min(N-1,Math.floor(p*N+1e-6));
+      if(i!==active)show(i,i>active?1:-1);
+      const W=window.innerWidth,H=window.innerHeight,s=sun.offsetWidth;
+      sx(-s*.2+p*(W-s*.6));
+      sy(H*(.66-.52*Math.sin(Math.PI*p))-s/2);
+      ticks.forEach((t,k)=>{const f=Math.min(1,Math.max(0,p*N-k));const bar=t.querySelector('.bar i');if(bar)bar.style.transform='scaleX('+f.toFixed(3)+')';});
+    }
+  });
+  ticks.forEach((t,k)=>t.addEventListener('click',()=>{scrollTo(st.start+((k+.5)/N)*(st.end-st.start),{duration:1.8});}));
+  const W=window.innerWidth,H=window.innerHeight,s=sun.offsetWidth;
+  gsap.set(sun,{x:-s*.2,y:H*.66-s/2});
+  ScrollTrigger.create({trigger:'#seqTrack',start:'top 65%',once:true,onEnter:()=>{
+    gsap.to(mainEls[0],{clipPath:'inset(0% 0% 0% 0%)',duration:1.5,ease:'expo.inOut'});
+    const i0=mainEls[0].querySelector('img');if(i0)gsap.fromTo(i0,{scale:1.4},{scale:1,duration:2.2,ease:'expo.out'});
+    gsap.to(secEls[0],{clipPath:'circle(75% at 50% 50%)',duration:1.2,ease:'expo.inOut',delay:.3});
+    if(active===0)gsap.to($$('.rise',chEls[0]),{yPercent:0,duration:1.3,ease:'expo.out',stagger:.04,delay:.35});
+  }});
+})();
+
+/* ============ frames rows ============ */
+(function(){
+  const dA=()=>Math.max(0,rowA.scrollWidth-window.innerWidth),dB=()=>Math.max(0,rowB.scrollWidth-window.innerWidth);
+  gsap.fromTo(rowA,{x:0},{x:()=>-dA(),ease:'none',scrollTrigger:{trigger:'#frRows',start:'top bottom',end:'bottom top',scrub:1,invalidateOnRefresh:true}});
+  gsap.fromTo(rowB,{x:()=>-dB()},{x:0,ease:'none',scrollTrigger:{trigger:'#frRows',start:'top bottom',end:'bottom top',scrub:1,invalidateOnRefresh:true}});
+})();
+
+/* ============ lightbox ============ */
+const lb=$('#lb'),lbImg=$('#lbImg'),lbCap=$('#lbCap'),lbCount=$('#lbCount');
+const allFrames=$$('.fr').map(f=>f.querySelector('img').src);
+let li=0;
+function setLb(i,dir){
+  li=(i+allFrames.length)%allFrames.length;
+  lbCap.textContent='PG Design Interior Studio';
+  lbCount.textContent=pad(li+1)+' / '+pad(allFrames.length);
+  gsap.set(lbImg,{opacity:0});
+  lbImg.alt='PG Design Interior Studio';lbImg.referrerPolicy='no-referrer';lbImg.src=allFrames[li];
+  gsap.fromTo(lbImg,{opacity:0,x:dir*70,scale:.97},{opacity:1,x:0,scale:1,duration:.9,ease:'expo.out'});
+}
+function lbOpen(i){lb.classList.add('open');lb.setAttribute('aria-hidden','false');if(lenis)lenis.stop();gsap.fromTo(lb,{opacity:0},{opacity:1,duration:.5});setLb(i,0);}
+function lbClose(){gsap.to(lb,{opacity:0,duration:.4,onComplete:()=>{lb.classList.remove('open');lb.setAttribute('aria-hidden','true');if(lenis)lenis.start();}});}
+window.lbOpen=lbOpen;
+$('#lbClose').addEventListener('click',lbClose);
+$('#lbPrev').addEventListener('click',()=>setLb(li-1,-1));
+$('#lbNext').addEventListener('click',()=>setLb(li+1,1));
+lb.addEventListener('click',e=>{if(e.target===lb||e.target.classList.contains('lb-stage'))lbClose();});
+window.addEventListener('keydown',e=>{
+  if(!lb.classList.contains('open'))return;
+  if(e.key==='Escape')lbClose();
+  if(e.key==='ArrowLeft')setLb(li-1,-1);
+  if(e.key==='ArrowRight')setLb(li+1,1);
+});
+
+/* ============ approach sun path ============ */
+(function(){
+  const path=$('#sunPath'),dot=$('#sunDot'),box=$('#howPath'),geo=$('#sunPathBase'),steps=$$('.hstep');
+  const len=geo.getTotalLength();
+  function place(p){
+    const W=box.clientWidth,H=box.clientHeight;const pt=geo.getPointAtLength(len*p);
+    gsap.set(dot,{x:pt.x/1000*W,y:pt.y/220*H});
+    path.style.strokeDashoffset=String(1-p);
+    steps.forEach((s,i)=>s.classList.toggle('on',p>=(i+.1)/steps.length-.02));
+  }
+  place(0);
+  ScrollTrigger.create({trigger:box,start:'top 82%',end:'bottom 28%',scrub:.6,onUpdate:s=>place(s.progress),onRefresh:s=>place(s.progress)});
+})();
+
+/* ============ marquee skew ============ */
+(function(){
+  const rows=$$('.marq-row');const skew=gsap.quickTo(rows,'skewX',{duration:.6,ease:'power3'});let tm;
+  const onV=v=>{skew(gsap.utils.clamp(-9,9,-v*.4));clearTimeout(tm);tm=setTimeout(()=>skew(0),140);};
+  if(lenis)lenis.on('scroll',e=>onV(e.velocity));
+})();
+
+/* ============ contact + footer ============ */
+gsap.from('#inquiryBtn',{y:30,opacity:0,duration:1.2,ease:'power3.out',scrollTrigger:{trigger:'#contact',start:'top 82%'}});
+(function(){
+  const letters=$$('#footWord span');
+  gsap.from(letters,{yPercent:60,opacity:0,duration:1.4,stagger:.05,ease:'expo.out',scrollTrigger:{trigger:'.foot',start:'top 85%'}});
+  letters.forEach(l=>{
+    l.addEventListener('mouseenter',()=>gsap.to(l,{yPercent:-10,duration:.4,ease:'power3.out'}));
+    l.addEventListener('mouseleave',()=>gsap.to(l,{yPercent:0,duration:1,ease:'elastic.out(1,.4)'}));
+  });
+})();
+
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>ScrollTrigger.refresh());
+window.addEventListener('load',()=>setTimeout(()=>ScrollTrigger.refresh(),400));
+})();
+</script>
+<script>
+setTimeout(function(){
+  var l=document.getElementById('loader');
+  if(l&&l.style.display!=='none'){l.style.transition='opacity .6s';l.style.opacity='0';setTimeout(function(){if(l.parentNode)l.parentNode.removeChild(l);},700);}
+},9000);
+</script>
 </body>
 </html>
